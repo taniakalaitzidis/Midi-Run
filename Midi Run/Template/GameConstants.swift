@@ -37,7 +37,7 @@ struct GameConstants {
         static let worldBackgroundNames = ["backgroundsmaller", "clouds"]
         static let playerName = "Player"
         static let playerImageName = "idle0"
-        static let groundNodeName = "GroundNode"
+        static let groundNodeName = "ground"
         static let enemyName = "Enemy"
         
         static let playerIdleAtlas = "Player Idle Atlas"

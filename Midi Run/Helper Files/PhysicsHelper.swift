@@ -14,11 +14,12 @@ class PhysicsHelper {
         
         switch name {
         case GameConstants.StringConstants.playerName:
-            sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: sprite.size.width/2, height: sprite.size.height))
+            sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: sprite.size.width/1.5, height: sprite.size.height))
             sprite.physicsBody!.restitution = 0.0
+            sprite.physicsBody!.affectedByGravity = true
             sprite.physicsBody!.allowsRotation = false
             sprite.physicsBody!.categoryBitMask = GameConstants.PhysicsCategories.playerCategory
-            sprite.physicsBody!.collisionBitMask = GameConstants.PhysicsCategories.groundCategory | GameConstants.PhysicsCategories.finishCategory
+            sprite.physicsBody!.collisionBitMask = GameConstants.PhysicsCategories.groundCategory
             sprite.physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.allCategory
         case GameConstants.StringConstants.enemyName:
             sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
@@ -36,7 +37,7 @@ class PhysicsHelper {
     
     static func addPhysicsBody(to tileMap: SKTileMapNode, and tileInfo: String) {
         let tileSize = tileMap.tileSize
-        
+
         for row in 0..<tileMap.numberOfRows {
             var tiles = [Int]()
             for col in 0..<tileMap.numberOfColumns {
@@ -64,9 +65,9 @@ class PhysicsHelper {
                     }
                 }
             }
-            
+
         }
-        
+
     }
     
 }

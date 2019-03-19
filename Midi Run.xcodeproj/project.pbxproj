@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A321EFB223FC9F1006000E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A321EFA223FC9F1006000E6 /* Assets.xcassets */; };
 		6A3B247D21D41CA100474B87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3B247C21D41CA100474B87 /* AppDelegate.swift */; };
 		6A3B248321D41CA100474B87 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3B248221D41CA100474B87 /* GameScene.swift */; };
 		6A3B248521D41CA100474B87 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3B248421D41CA100474B87 /* GameViewController.swift */; };
 		6A3B248821D41CA100474B87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A3B248621D41CA100474B87 /* Main.storyboard */; };
-		6A3B248A21D41CA200474B87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A3B248921D41CA200474B87 /* Assets.xcassets */; };
 		6A3B248D21D41CA200474B87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A3B248B21D41CA200474B87 /* LaunchScreen.storyboard */; };
 		6A3B249821D41CA200474B87 /* Midi_RunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3B249721D41CA200474B87 /* Midi_RunTests.swift */; };
 		6A3B24A321D41CA200474B87 /* Midi_RunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3B24A221D41CA200474B87 /* Midi_RunUITests.swift */; };
@@ -47,12 +47,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A321EFA223FC9F1006000E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Midi Run/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		6A3B247921D41CA100474B87 /* Midi Run.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Midi Run.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A3B247C21D41CA100474B87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A3B248221D41CA100474B87 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		6A3B248421D41CA100474B87 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		6A3B248721D41CA100474B87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6A3B248921D41CA200474B87 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A3B248C21D41CA200474B87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A3B248E21D41CA200474B87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A3B249321D41CA200474B87 /* Midi RunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Midi RunTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,8 +129,8 @@
 				6A3B24BD21D42AF600474B87 /* Extensions */,
 				6A3B24BA21D4245300474B87 /* Tiles */,
 				6A3B24B621D4229000474B87 /* Scene Editor Files */,
-				6A3B248921D41CA200474B87 /* Assets.xcassets */,
 				6A3B24B321D4207300474B87 /* Scenes */,
+				6A321EFA223FC9F1006000E6 /* Assets.xcassets */,
 				6A3B24B221D4206800474B87 /* Controller */,
 				6A3B24B121D4205800474B87 /* UI */,
 				6A3B24B021D4203C00474B87 /* Template */,
@@ -359,8 +359,8 @@
 				6A3B24BC21D4249200474B87 /* TileSets.sks in Resources */,
 				6A3B248821D41CA100474B87 /* Main.storyboard in Resources */,
 				6A3B24B521D421D300474B87 /* Default-568h@2x.png in Resources */,
+				6A321EFB223FC9F1006000E6 /* Assets.xcassets in Resources */,
 				6A3B24B921D4230500474B87 /* Level_0-1.sks in Resources */,
-				6A3B248A21D41CA200474B87 /* Assets.xcassets in Resources */,
 				6A3B248D21D41CA200474B87 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

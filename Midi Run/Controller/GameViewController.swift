@@ -34,6 +34,7 @@ class GameViewController: UIViewController {
             // shows amount of nodes
             
             view.showsPhysics = true
+            //shows the blue lines around any physics
          
         }
 

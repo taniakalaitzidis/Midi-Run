@@ -16,7 +16,10 @@ class GameScene: SKScene {
     
     var worldLayer: Layer!
     var backgroundLayer: RepeatingLayer!
-    var backgroundClouds: RepeatingLayer!
+    //var backgroundClouds: RepeatingLayer!
+    var backgroundGround: RepeatingLayer!
+    var backgroundSunset: RepeatingLayer!
+    
     var mapNode: SKNode!
     var tileMap: SKTileMapNode!
     //using exclamation point means we won't need an initializer because we initialize the properties below
@@ -41,11 +44,12 @@ class GameScene: SKScene {
     var player: Player!
     
     var touch = false
-    var brake = false
+   // var brake = false
 
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -6.0)
+        // the physicsWorld.gravity is where you can change how fast or slow the player falls in the game
         
         physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: frame.minX, y: frame.minY), to: CGPoint(x:frame.maxX, y:frame.minY))
         physicsBody!.categoryBitMask = GameConstants.PhysicsCategories.frameCategory
@@ -61,18 +65,21 @@ class GameScene: SKScene {
         worldLayer.layerVelocity = CGPoint(x: -200.0, y: 0.0)
         // we want the player to move to the left and right, which is the x value
         // the value of -200 is to move left and right. y is to move up and down
-
         
         backgroundLayer = RepeatingLayer()
         backgroundLayer.zPosition = GameConstants.ZPositions.farBGZ
         addChild(backgroundLayer)
         
-        backgroundClouds = RepeatingLayer()
-        addChild(backgroundClouds)
+//        backgroundClouds = RepeatingLayer()
+//        backgroundClouds.zPosition = GameConstants.ZPositions.closeBGZ
+//        addChild(backgroundClouds)
         
-        backgroundClouds = RepeatingLayer()
-        backgroundClouds.zPosition = GameConstants.ZPositions.farBGZ
-        addChild(backgroundClouds)
+        backgroundGround = RepeatingLayer()
+        addChild(backgroundGround)
+        
+        backgroundSunset = RepeatingLayer()
+        backgroundLayer.zPosition = GameConstants.ZPositions.farBGZ
+        addChild(backgroundSunset)
         
         // the for in 0...1 means it will run twice; repeating effect
         for i in 0...1 {
@@ -84,19 +91,47 @@ class GameScene: SKScene {
             backgroundLayer.addChild(backgroundImage)
         }
         
+//        for i in 0...1 {
+//            let backgroundCloudsImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.worldBackgroundNames[1])
+//            backgroundCloudsImage.name = String(i)
+//            backgroundCloudsImage.scale(to: frame.size, width: false, multiplier: 1.0/4)
+//
+//           // backgroundCloudsImage.size = CGSize(width: 1251, height: 130)
+//            backgroundCloudsImage.anchorPoint = CGPoint.zero
+//            backgroundCloudsImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundCloudsImage.size.width, y: 480.0)
+//            backgroundClouds.addChild(backgroundCloudsImage)
+//
+//        }
+        
         for i in 0...1 {
-            let backgroundCloudsImage = SKSpriteNode(imageNamed: "clouds")
-            backgroundCloudsImage.name = String(i)
-            backgroundCloudsImage.size = CGSize(width: 1251, height: 130)
-            backgroundCloudsImage.anchorPoint = CGPoint.zero
-            backgroundCloudsImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundCloudsImage.size.width, y: 480.0)
-            backgroundClouds.addChild(backgroundCloudsImage)
+            let backgroundGroundImage = SKSpriteNode(imageNamed: "ground")
+            backgroundGroundImage.name = String(i)
+            backgroundGroundImage.size = CGSize(width: 1237, height: 142)
+            backgroundGroundImage.anchorPoint = CGPoint.zero
+            backgroundGroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundGroundImage.size.width, y: 0.0)
+            backgroundGroundImage.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: backgroundGroundImage.size.width , height: backgroundGroundImage.size.height * 2.0))
+            backgroundGroundImage.physicsBody?.affectedByGravity = false
+            backgroundGroundImage.physicsBody?.isDynamic = false
+            backgroundGround.addChild(backgroundGroundImage)
             
         }
         
+        for i in 0...1 {
+            let backgroundSunset = SKSpriteNode(imageNamed: "backgroundSunset")
+            backgroundSunset.name = String(i)
+            backgroundSunset.scale(to: frame.size, width: false, multiplier: 1.0)
+            backgroundSunset.anchorPoint = CGPoint.zero
+            backgroundSunset.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundSunset.size.width, y: 135.0)
+            backgroundLayer.addChild(backgroundSunset)
+        }
+        
+        
+        
         //change speed of background here
-        backgroundLayer.layerVelocity = CGPoint(x: -70.0, y: 0.0)
-        backgroundClouds.layerVelocity = CGPoint(x: -30, y: 0.0)
+        backgroundLayer.layerVelocity = CGPoint(x: -10.0, y: 0.0)
+        //backgroundClouds.layerVelocity = CGPoint(x: -30, y: 0.0)
+        backgroundGround.layerVelocity = CGPoint(x: -100.0, y: 0.0)
+        backgroundSunset.layerVelocity = CGPoint(x: -10.0, y: 0.0)
 
         
         load(level: "Level_0-1")
@@ -116,7 +151,7 @@ class GameScene: SKScene {
             tileMap.scale(to: frame.size, width: false, multiplier: 1.0)
             //scaling for different devices
             
-            PhysicsHelper.addPhysicsBody(to: tileMap, and: "ground")
+            PhysicsHelper.addPhysicsBody(to: tileMap, and: GameConstants.StringConstants.groundNodeName)
             for child in coloredTiles.children {
                 if let sprite = child as? SKSpriteNode, sprite.name != nil {
                     ObjectHelper.handleChild(sprite: sprite, with: sprite.name!)
@@ -142,6 +177,7 @@ class GameScene: SKScene {
     }
     
     func addPlayerActions() {
+        
         let up = SKAction.moveBy(x: 0.0, y: frame.size.height/4, duration: 0.4)
         //again, you can change the duration of the jump
         up.timingMode = .easeOut
@@ -149,11 +185,11 @@ class GameScene: SKScene {
         
         player.createUserData(entry: up, forKey: GameConstants.StringConstants.jumpUpActionKey)
         
-        let move = SKAction.moveBy(x: 0.0, y: player.size.height/4, duration: 0.4)
-        let jump = SKAction.animate(with: player.jumpFrames, timePerFrame: 0.4/Double(player.jumpFrames.count))
-        let group = SKAction.group([move,jump])
+     //   let move = SKAction.moveBy(x: 0.0, y: player.size.height/4, duration: 0.4)
+      //  let jump = SKAction.animate(with: player.jumpFrames, timePerFrame: 0.4/Double(player.jumpFrames.count))
+       // let group = SKAction.group([move,jump])
         
-        player.createUserData(entry: group, forKey: GameConstants.StringConstants.brakeDescendActionKey)
+       // player.createUserData(entry: group, forKey: GameConstants.StringConstants.brakeDescendActionKey)
 
     }
     
@@ -169,12 +205,12 @@ class GameScene: SKScene {
         }
     }
     
-    func brakeDescend() {
-        brake = true
-        player.physicsBody!.velocity.dy = 0.0
+   // func brakeDescend() {
+    //    brake = true
+    //    player.physicsBody!.velocity.dy = 0.0
         
-        player.run(player.userData?.value(forKey: GameConstants.StringConstants.brakeDescendActionKey) as! SKAction)
-    }
+     //   player.run(player.userData?.value(forKey: GameConstants.StringConstants.brakeDescendActionKey) as! SKAction)
+  //  }
     
     func handleEnemyContact() {
         die(reason: 0)
@@ -211,8 +247,8 @@ class GameScene: SKScene {
             touch = true
             if !player.airborne {
                 jump()
-            } else if !brake {
-                brakeDescend()
+         //   } else if !brake {
+           //     brakeDescend()
             }
         default:
             break
@@ -243,7 +279,8 @@ class GameScene: SKScene {
         if gameState == .ongoing {
             worldLayer.update(dt)
             backgroundLayer.update(dt)
-            backgroundClouds.update(dt)
+           // backgroundClouds.update(dt)
+            backgroundGround.update(dt)
 
         }
       
@@ -259,8 +296,6 @@ class GameScene: SKScene {
         }
     }
     
-
-    
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -271,7 +306,7 @@ extension GameScene: SKPhysicsContactDelegate {
         switch contactMask {
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.groundCategory:
             player.airborne = false
-            brake = false
+         //   brake = false
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.enemyCategory:
             handleEnemyContact()
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.frameCategory:
