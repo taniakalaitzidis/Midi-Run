@@ -75,10 +75,11 @@ class GameScene: SKScene {
 //        addChild(backgroundClouds)
         
         backgroundGround = RepeatingLayer()
+        backgroundGround.zPosition = GameConstants.ZPositions.worldZ
         addChild(backgroundGround)
         
         backgroundSunset = RepeatingLayer()
-        backgroundLayer.zPosition = GameConstants.ZPositions.farBGZ
+        backgroundLayer.zPosition = GameConstants.ZPositions.eveningBG
         addChild(backgroundSunset)
         
         // the for in 0...1 means it will run twice; repeating effect

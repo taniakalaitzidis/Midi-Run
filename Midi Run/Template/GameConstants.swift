@@ -24,6 +24,7 @@ struct GameConstants {
     }
     
     struct ZPositions {
+        static let eveningBG: CGFloat = -1
         static let farBGZ: CGFloat = 0
         static let closeBGZ: CGFloat = 1
         static let worldZ: CGFloat = 2
