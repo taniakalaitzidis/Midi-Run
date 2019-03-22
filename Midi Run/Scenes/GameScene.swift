@@ -284,6 +284,7 @@ class GameScene: SKScene {
             backgroundLayer.update(dt)
            // backgroundClouds.update(dt)
             backgroundGround.update(dt)
+            backgroundSunset.update(dt)
 
         }
       
