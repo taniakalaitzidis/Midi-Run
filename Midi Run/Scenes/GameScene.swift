@@ -66,6 +66,10 @@ class GameScene: SKScene {
         // we want the player to move to the left and right, which is the x value
         // the value of -200 is to move left and right. y is to move up and down
         
+        backgroundSunset = RepeatingLayer()
+        backgroundSunset.zPosition = GameConstants.ZPositions.eveningBG
+        addChild(backgroundSunset)
+        
         backgroundLayer = RepeatingLayer()
         backgroundLayer.zPosition = GameConstants.ZPositions.farBGZ
         addChild(backgroundLayer)
@@ -75,16 +79,14 @@ class GameScene: SKScene {
 //        addChild(backgroundClouds)
         
         backgroundGround = RepeatingLayer()
-        backgroundGround.zPosition = GameConstants.ZPositions.worldZ
+        backgroundGround.zPosition = GameConstants.ZPositions.closeBGZ
         addChild(backgroundGround)
         
-        backgroundSunset = RepeatingLayer()
-        backgroundLayer.zPosition = GameConstants.ZPositions.eveningBG
-        addChild(backgroundSunset)
+       
         
         // the for in 0...1 means it will run twice; repeating effect
         for i in 0...1 {
-            let backgroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.worldBackgroundNames[0])
+            let backgroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.worldBackgroundNames)
             backgroundImage.name = String(i)
             backgroundImage.scale(to: frame.size, width: false, multiplier: 1.0)
             backgroundImage.anchorPoint = CGPoint.zero
@@ -118,12 +120,12 @@ class GameScene: SKScene {
         }
         
         for i in 0...1 {
-            let backgroundSunset = SKSpriteNode(imageNamed: "backgroundSunset")
-            backgroundSunset.name = String(i)
-            backgroundSunset.scale(to: frame.size, width: false, multiplier: 1.0)
-            backgroundSunset.anchorPoint = CGPoint.zero
-            backgroundSunset.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundSunset.size.width, y: 135.0)
-            backgroundLayer.addChild(backgroundSunset)
+            let backgroundSunsetImage = SKSpriteNode(imageNamed: "backgroundSunset")
+            backgroundSunsetImage.name = String(i)
+            backgroundSunsetImage.scale(to: frame.size, width: false, multiplier: 1.0)
+            backgroundSunsetImage.anchorPoint = CGPoint.zero
+            backgroundSunsetImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundSunsetImage.size.width, y: 135.0)
+            backgroundSunset.addChild(backgroundSunsetImage)
         }
         
         

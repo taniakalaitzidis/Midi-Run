@@ -35,7 +35,7 @@ struct GameConstants {
     
     struct StringConstants {
         static let coloredTilesName = "Colored Tiles"
-        static let worldBackgroundNames = ["backgroundsmaller", "clouds"]
+        static let worldBackgroundNames = "backgroundsmaller"
         static let playerName = "Player"
         static let playerImageName = "idle0"
         static let groundNodeName = "ground"
