@@ -27,6 +27,8 @@ class GameScene: SKScene {
     var lastTime: TimeInterval = 0
     var dt: TimeInterval = 0
     
+    var ableToJump = true
+    
     var gameState = GameState.ready {
         willSet {
             switch newValue {
@@ -250,11 +252,15 @@ class GameScene: SKScene {
             touch = true
             if !player.airborne {
                 jump()
+            }
          //   } else if !brake {
            //     brakeDescend()
-            }
+            
         default:
             break
+        }
+        if ableToJump == true {
+            player.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 80))
         }
     }
     
@@ -285,6 +291,13 @@ class GameScene: SKScene {
            // backgroundClouds.update(dt)
             backgroundGround.update(dt)
             backgroundSunset.update(dt)
+            
+            if player.physicsBody?.velocity.dy == 0 {
+                ableToJump = true
+            }
+            else {
+                ableToJump = false
+            }
 
         }
       
