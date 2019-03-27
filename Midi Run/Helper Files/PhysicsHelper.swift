@@ -31,6 +31,8 @@ class PhysicsHelper {
         if name != GameConstants.StringConstants.playerName {
             sprite.physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
             sprite.physicsBody!.isDynamic = false
+            // the isDynamic = false makes the physicsBody static. The physics bodies will stay in their place and not get
+            // pushed around from impact
         }
         
     }

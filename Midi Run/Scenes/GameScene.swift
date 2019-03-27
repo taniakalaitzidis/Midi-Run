@@ -45,9 +45,12 @@ class GameScene: SKScene {
     
     var touch = false
    // var brake = false
+    
+    
 
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
+        
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -6.0)
         // the physicsWorld.gravity is where you can change how fast or slow the player falls in the game
         
@@ -55,8 +58,17 @@ class GameScene: SKScene {
         physicsBody!.categoryBitMask = GameConstants.PhysicsCategories.frameCategory
         physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
         
+//        run(SKAction.repeatForever(SKAction.sequence([SKAction.run(spawnObstacle), SKAction.wait(forDuration: 1.0)])))
+        
         createLayers()
+        
     }
+    
+//    func randomBetweenNumbers(firstNum: CGFloat, secondNum: CGFloat) -> CGFloat {
+//        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum + secondNum) + min(firstNum, secondNum)
+//    }
+    
+  
     
     func createLayers() {
         worldLayer = Layer()
@@ -164,6 +176,7 @@ class GameScene: SKScene {
         
         addPlayer()
     }
+
     
     func addPlayer() {
         player = Player(imageNamed: GameConstants.StringConstants.playerImageName)
@@ -214,6 +227,30 @@ class GameScene: SKScene {
         
      //   player.run(player.userData?.value(forKey: GameConstants.StringConstants.brakeDescendActionKey) as! SKAction)
   //  }
+//
+
+    func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+
+    func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
+    }
+
+    func spawnObstacle() {
+        let obstacle = SKSpriteNode(imageNamed: "redtile")
+        let obstacle1 = random(min: obstacle.size.height, max: size.height - obstacle.size.height)
+        obstacle.position = CGPoint(x: frame.midX/2 + obstacle.size.width/2, y: obstacle1)
+        obstacle.zPosition = GameConstants.ZPositions.objectZ
+        addChild(obstacle)
+
+        let duration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+
+    }
+    
+
+
+    
     
     func handleEnemyContact() {
         die(reason: 0)
