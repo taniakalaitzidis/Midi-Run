@@ -27,6 +27,8 @@ class GameScene: SKScene {
     var lastTime: TimeInterval = 0
     var dt: TimeInterval = 0
     
+    var ableToJump = true
+    
     var gameState = GameState.ready {
         willSet {
             switch newValue {
@@ -115,6 +117,7 @@ class GameScene: SKScene {
             backgroundGroundImage.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: backgroundGroundImage.size.width , height: backgroundGroundImage.size.height * 2.0))
             backgroundGroundImage.physicsBody?.affectedByGravity = false
             backgroundGroundImage.physicsBody?.isDynamic = false
+            backgroundGroundImage.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
             backgroundGround.addChild(backgroundGroundImage)
             
         }
@@ -250,12 +253,14 @@ class GameScene: SKScene {
             touch = true
             if !player.airborne {
                 jump()
+            }
          //   } else if !brake {
            //     brakeDescend()
-            }
+            
         default:
             break
         }
+       
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -285,6 +290,13 @@ class GameScene: SKScene {
            // backgroundClouds.update(dt)
             backgroundGround.update(dt)
             backgroundSunset.update(dt)
+            
+            if player.physicsBody?.velocity.dy == 0 {
+                ableToJump = true
+            }
+            else {
+                ableToJump = false
+            }
 
         }
       
@@ -309,6 +321,7 @@ extension GameScene: SKPhysicsContactDelegate {
         
         switch contactMask {
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.groundCategory:
+            print("Touched Ground")
             player.airborne = false
          //   brake = false
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.enemyCategory:
@@ -326,7 +339,7 @@ extension GameScene: SKPhysicsContactDelegate {
         
         switch contactMask {
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.groundCategory:
-            player.airborne = true
+            player.airborne = false
         default:
             break
         }
