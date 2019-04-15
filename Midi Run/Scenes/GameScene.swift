@@ -107,7 +107,7 @@ class GameScene: SKScene {
 //        }
         
         for i in 0...1 {
-            let backgroundGroundImage = SKSpriteNode(imageNamed: "ground")
+            let backgroundGroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.groundNodeName)
             backgroundGroundImage.name = String(i)
             backgroundGroundImage.size = CGSize(width: 1237, height: 142)
             backgroundGroundImage.anchorPoint = CGPoint.zero
