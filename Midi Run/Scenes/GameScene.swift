@@ -117,6 +117,7 @@ class GameScene: SKScene {
             backgroundGroundImage.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: backgroundGroundImage.size.width , height: backgroundGroundImage.size.height * 2.0))
             backgroundGroundImage.physicsBody?.affectedByGravity = false
             backgroundGroundImage.physicsBody?.isDynamic = false
+            backgroundGroundImage.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
             backgroundGround.addChild(backgroundGroundImage)
             
         }
@@ -259,9 +260,7 @@ class GameScene: SKScene {
         default:
             break
         }
-        if ableToJump == true {
-            player.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 80))
-        }
+       
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -322,6 +321,7 @@ extension GameScene: SKPhysicsContactDelegate {
         
         switch contactMask {
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.groundCategory:
+            print("Touched Ground")
             player.airborne = false
          //   brake = false
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.enemyCategory:
@@ -339,7 +339,7 @@ extension GameScene: SKPhysicsContactDelegate {
         
         switch contactMask {
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.groundCategory:
-            player.airborne = true
+            player.airborne = false
         default:
             break
         }
