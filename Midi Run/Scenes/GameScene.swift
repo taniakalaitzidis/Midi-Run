@@ -20,6 +20,9 @@ class GameScene: SKScene {
     var backgroundGround: RepeatingLayer!
     var backgroundSunset: RepeatingLayer!
     
+    var pipesHolder = SKNode();
+
+    
     var mapNode: SKNode!
     var tileMap: SKTileMapNode!
     //using exclamation point means we won't need an initializer because we initialize the properties below
@@ -59,6 +62,7 @@ class GameScene: SKScene {
         
         createLayers()
     }
+    
     
     func createLayers() {
         worldLayer = Layer()
@@ -167,6 +171,90 @@ class GameScene: SKScene {
         
         addPlayer()
     }
+//
+//    let deathTile = SKTexture(imageNamed: GameConstants.StringConstants.enemyName)
+//
+//    func spawnDeathTile() {
+//        let redTile = SKSpriteNode(texture: deathTile)
+//        redTile.physicsBody = SKPhysicsBody(texture: deathTile, size: redTile.size)
+//        redTile.position = CGPoint(x: size.width / 2, y: size.height / 2)
+//
+//        addChild(redTile)
+//    }
+    
+    func createPipes() {
+        pipesHolder = SKNode()
+        pipesHolder.name = "Holder"
+        
+        let pipeDown = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyName)
+
+        pipeDown.name = "Pipe"
+        pipeDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        pipeDown.position = CGPoint(x: 7, y: 200)
+       // pipeDown.yScale = 1.5;
+        pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
+        
+        pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
+        pipeDown.physicsBody?.affectedByGravity = false
+        pipeDown.physicsBody?.isDynamic = false
+        
+        pipesHolder.zPosition = 5
+        pipesHolder.position.x = self.frame.width + 100
+        pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: -300, secondNum: 300)
+        //pipesHolder.position = CGPoint(x: 300, y: 0);
+        
+        pipesHolder.addChild(pipeDown)
+        self.addChild(pipesHolder)
+        
+        let destination = self.frame.width * 2
+        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(10))
+        let remove = SKAction.removeFromParent()
+        
+        pipesHolder.run(SKAction.sequence([move, remove]), withKey: "Move")
+        
+    }
+    
+    func spawnObstacles() {
+        let spawn = SKAction.run({ () -> Void in
+            self.createPipes()
+        });
+        
+        let delay = SKAction.wait(forDuration: TimeInterval(2))
+        let sequence = SKAction.sequence([spawn, delay])
+        
+        self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
+        
+    }
+    
+    
+    
+//    func random() -> CGFloat {
+//        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+//    }
+//
+//    func random(min: CGFloat, max: CGFloat) -> CGFloat {
+//        return random() * (max - min) + min
+//    }
+//
+//    func addDeathTile() {
+//
+//        let deathTile = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyName)
+//
+//        let actualX = random(min: deathTile.size.height/2, max: size.height - deathTile.size.height/2)
+//
+//        deathTile.position = CGPoint(x: size.width + deathTile.size.width/2, y: actualX)
+//
+//        addChild(deathTile)
+//
+//        let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+//
+//        let actionMove = SKAction.move(to: CGPoint(x: -deathTile.size.width/2, y: actualX), duration: TimeInterval(actualDuration))
+//
+//        let actionMoveDone = SKAction.removeFromParent()
+//        deathTile.run(SKAction.sequence([actionMove, actionMoveDone]))
+//
+//
+//    }
     
     func addPlayer() {
         player = Player(imageNamed: GameConstants.StringConstants.playerImageName)
@@ -253,7 +341,10 @@ class GameScene: SKScene {
             touch = true
             if !player.airborne {
                 jump()
+                spawnObstacles();
+
             }
+            
          //   } else if !brake {
            //     brakeDescend()
             
@@ -299,6 +390,8 @@ class GameScene: SKScene {
             }
 
         }
+        
+        
       
     }
     

@@ -26,6 +26,7 @@
 		6AB0E24621D54F74009C0B30 /* PhysicsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB0E24521D54F74009C0B30 /* PhysicsHelper.swift */; };
 		6AB0E24821D55874009C0B30 /* GroundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB0E24721D55874009C0B30 /* GroundNode.swift */; };
 		6AB0E24A21D55CBE009C0B30 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB0E24921D55CBE009C0B30 /* AnimationHelper.swift */; };
+		6AE06ADE22661335002107AC /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE06ADD22661335002107AC /* Random.swift */; };
 		6AFDEB2A21DFE625007BEBFE /* ObjectHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFDEB2921DFE625007BEBFE /* ObjectHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		6AB0E24521D54F74009C0B30 /* PhysicsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsHelper.swift; sourceTree = "<group>"; };
 		6AB0E24721D55874009C0B30 /* GroundNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundNode.swift; sourceTree = "<group>"; };
 		6AB0E24921D55CBE009C0B30 /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
+		6AE06ADD22661335002107AC /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		6AFDEB2921DFE625007BEBFE /* ObjectHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -238,6 +240,7 @@
 			children = (
 				6AB0E24221D54807009C0B30 /* Player.swift */,
 				6AB0E24721D55874009C0B30 /* GroundNode.swift */,
+				6AE06ADD22661335002107AC /* Random.swift */,
 			);
 			path = "Custom Classes";
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 			files = (
 				6A3B248321D41CA100474B87 /* GameScene.swift in Sources */,
 				6A3B24BF21D42B1300474B87 /* SKNode+Extensions.swift in Sources */,
+				6AE06ADE22661335002107AC /* Random.swift in Sources */,
 				6AB0E23C21D52E95009C0B30 /* Layer.swift in Sources */,
 				6A3B248521D41CA100474B87 /* GameViewController.swift in Sources */,
 				6AFDEB2A21DFE625007BEBFE /* ObjectHelper.swift in Sources */,
