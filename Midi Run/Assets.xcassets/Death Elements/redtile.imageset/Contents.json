@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "redtile.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "redtile@2x.png",
       "scale" : "2x"
     },
     {

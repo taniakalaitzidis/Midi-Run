@@ -182,10 +182,11 @@ class GameScene: SKScene {
 //        addChild(redTile)
 //    }
     
+    
     func createPipes() {
         pipesHolder = SKNode()
         pipesHolder.name = "Holder"
-        
+                
         let pipeDown = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyName)
 
         pipeDown.name = "Pipe"
@@ -200,13 +201,13 @@ class GameScene: SKScene {
         
         pipesHolder.zPosition = 5
         pipesHolder.position.x = self.frame.width + 100
-        pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: -300, secondNum: 300)
+        pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: -100, secondNum: 300)
         //pipesHolder.position = CGPoint(x: 300, y: 0);
         
         pipesHolder.addChild(pipeDown)
         self.addChild(pipesHolder)
         
-        let destination = self.frame.width * 2
+        let destination = self.frame.width 
         let move = SKAction.moveTo(x: -destination, duration: TimeInterval(10))
         let remove = SKAction.removeFromParent()
         
@@ -226,35 +227,6 @@ class GameScene: SKScene {
         
     }
     
-    
-    
-//    func random() -> CGFloat {
-//        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
-//    }
-//
-//    func random(min: CGFloat, max: CGFloat) -> CGFloat {
-//        return random() * (max - min) + min
-//    }
-//
-//    func addDeathTile() {
-//
-//        let deathTile = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyName)
-//
-//        let actualX = random(min: deathTile.size.height/2, max: size.height - deathTile.size.height/2)
-//
-//        deathTile.position = CGPoint(x: size.width + deathTile.size.width/2, y: actualX)
-//
-//        addChild(deathTile)
-//
-//        let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
-//
-//        let actionMove = SKAction.move(to: CGPoint(x: -deathTile.size.width/2, y: actualX), duration: TimeInterval(actualDuration))
-//
-//        let actionMoveDone = SKAction.removeFromParent()
-//        deathTile.run(SKAction.sequence([actionMove, actionMoveDone]))
-//
-//
-//    }
     
     func addPlayer() {
         player = Player(imageNamed: GameConstants.StringConstants.playerImageName)
