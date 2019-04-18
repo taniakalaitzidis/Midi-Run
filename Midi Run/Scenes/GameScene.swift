@@ -20,7 +20,7 @@ class GameScene: SKScene {
     var backgroundGround: RepeatingLayer!
     var backgroundSunset: RepeatingLayer!
     
-    var pipesHolder = SKNode();
+    var pipesHolder: SKSpriteNode!
 
     
     var mapNode: SKNode!
@@ -80,16 +80,11 @@ class GameScene: SKScene {
         backgroundLayer.zPosition = GameConstants.ZPositions.farBGZ
         addChild(backgroundLayer)
         
-//        backgroundClouds = RepeatingLayer()
-//        backgroundClouds.zPosition = GameConstants.ZPositions.closeBGZ
-//        addChild(backgroundClouds)
-        
         backgroundGround = RepeatingLayer()
         backgroundGround.zPosition = GameConstants.ZPositions.closeBGZ
         addChild(backgroundGround)
         
-       
-        
+
         // the for in 0...1 means it will run twice; repeating effect
         for i in 0...1 {
             let backgroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.worldBackgroundNames)
@@ -171,28 +166,19 @@ class GameScene: SKScene {
         
         addPlayer()
     }
-//
-//    let deathTile = SKTexture(imageNamed: GameConstants.StringConstants.enemyName)
-//
-//    func spawnDeathTile() {
-//        let redTile = SKSpriteNode(texture: deathTile)
-//        redTile.physicsBody = SKPhysicsBody(texture: deathTile, size: redTile.size)
-//        redTile.position = CGPoint(x: size.width / 2, y: size.height / 2)
-//
-//        addChild(redTile)
-//    }
     
     
     func createPipes() {
-        pipesHolder = SKNode()
+        pipesHolder = SKSpriteNode()
         pipesHolder.name = "Holder"
                 
         let pipeDown = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyName)
 
         pipeDown.name = "Pipe"
         pipeDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        pipeDown.position = CGPoint(x: 7, y: 200)
-       // pipeDown.yScale = 1.5;
+      //  pipeDown.position = CGPoint(x: 7, y: 200)
+        pipeDown.position = CGPoint(x: 0.0, y: 119)
+
         pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
         
         pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
@@ -202,9 +188,6 @@ class GameScene: SKScene {
         pipesHolder.zPosition = 5
         pipesHolder.position.x = self.frame.width + 100
 
-        pipeDown.position = CGPoint(x: 0.0, y: 119)
-
-
 //        pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
         //pipesHolder.position = CGPoint(x: 300, y: 0);
         
@@ -212,7 +195,7 @@ class GameScene: SKScene {
         self.addChild(pipesHolder)
         
         let destination = self.frame.width 
-        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(10))
+        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(8.5))
         let remove = SKAction.removeFromParent()
         
         pipesHolder.run(SKAction.sequence([move, remove]), withKey: "Move")
@@ -317,7 +300,7 @@ class GameScene: SKScene {
             touch = true
             if !player.airborne {
                 jump()
-                spawnObstacles();
+                spawnObstacles()
 
             }
             
