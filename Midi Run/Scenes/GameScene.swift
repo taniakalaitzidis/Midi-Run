@@ -188,7 +188,7 @@ class GameScene: SKScene {
         pipesHolder.zPosition = 5
         pipesHolder.position.x = self.frame.width + 100
 
-//        pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
+//       pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
         //pipesHolder.position = CGPoint(x: 300, y: 0);
         
         pipesHolder.addChild(pipeDown)
@@ -205,9 +205,10 @@ class GameScene: SKScene {
     func spawnObstacles() {
         let spawn = SKAction.run({ () -> Void in
             self.createPipes()
-        });
-        
-        let delay = SKAction.wait(forDuration: TimeInterval(2))
+        })
+       
+        let delay = SKAction.wait(forDuration: 2, withRange: 10)
+     //   let delay = SKAction.wait(forDuration: TimeInterval(2))
         let sequence = SKAction.sequence([spawn, delay])
         
         self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
