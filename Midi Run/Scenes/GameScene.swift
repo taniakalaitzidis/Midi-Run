@@ -201,7 +201,11 @@ class GameScene: SKScene {
         
         pipesHolder.zPosition = 5
         pipesHolder.position.x = self.frame.width + 100
-        pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: -100, secondNum: 300)
+
+        pipeDown.position = CGPoint(x: 0.0, y: 119)
+
+
+//        pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
         //pipesHolder.position = CGPoint(x: 300, y: 0);
         
         pipesHolder.addChild(pipeDown)
