@@ -12,10 +12,9 @@
 //
 //public extension CGFloat {
 //
-//    public static func randomBetweenNumbers(firstNum: CGFloat)
+//    public static func randomBetweenNumbers(firstNum: CGFloat, secondNum: CGFloat)
 //        -> CGFloat {
 //
-//            return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum)
-//
+//            return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + firstNum
 //    }
 //}

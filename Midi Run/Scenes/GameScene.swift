@@ -174,7 +174,7 @@ class GameScene: SKScene {
     
 
     func startTimers() {
-        platformTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
+        platformTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { (timer) in
             self.createPlatform()
         })
     }
@@ -190,23 +190,93 @@ class GameScene: SKScene {
         platform.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
         //platform.physicsBody?.collisionBitMask = 0
         addChild(platform)
+//
+//        let destination = self.frame.width
+//        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(8.5))
+//        let remove = SKAction.removeFromParent()
+        
+       // platform.run(SKAction.sequence([move, remove]), withKey: "Move")
+        
+        
+        //platform.position.y = CGFloat.randomBetweenNumbers(firstNum: 0, secondNum: )
+        //platform.position = CGPoint(x: 300, y: 100)
 
-        let maxY = size.height   - platform.size.height
-        let minY = -size.height  + platform.size.height 
+        let maxY = size.height - platform.size.height
+        let minY = -size.height + platform.size.height
         let range = maxY - minY
         let platformY = maxY - CGFloat(arc4random_uniform(UInt32(range)))
 
         platform.position = CGPoint(x: size.width / 2 + platform.size.width / 2, y: platformY)
-
-
-      //  platform.position = CGPoint(x: size.width / 2 + platform.size.width / 2, y: coinY)
 
         let moveLeft = SKAction.moveBy(x: -size.width - platform.size.width, y: 0, duration: 4)
 
         platform.run(SKAction.sequence([moveLeft, SKAction.removeFromParent()]))
     }
     
-//
+    
+    func spawnPlatforms() {
+        let spawn = SKAction.run({ () -> Void in
+            self.createPlatform()
+        })
+        
+        let delay = SKAction.wait(forDuration: 2, withRange: 5)
+        //   let delay = SKAction.wait(forDuration: TimeInterval(2))
+        let sequence = SKAction.sequence([spawn, delay])
+        
+        self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
+        
+    }
+    
+    
+    func createPipes() {
+        pipesHolder = SKSpriteNode()
+        pipesHolder.name = "Holder"
+        
+        let pipeDown = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyName)
+        
+        pipeDown.name = "Pipe"
+        pipeDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        //  pipeDown.position = CGPoint(x: 7, y: 200)
+        pipeDown.position = CGPoint(x: 0.0, y: 119)
+        
+        pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
+        
+        pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
+        pipeDown.physicsBody?.affectedByGravity = false
+        pipeDown.physicsBody?.isDynamic = false
+        
+        pipesHolder.zPosition = 5
+        pipesHolder.position.x = self.frame.width + 100
+        
+        //       pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
+        //pipesHolder.position = CGPoint(x: 300, y: 0);
+        
+        pipesHolder.addChild(pipeDown)
+        self.addChild(pipesHolder)
+        
+        let destination = self.frame.width
+        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(8.5))
+        let remove = SKAction.removeFromParent()
+        
+        pipesHolder.run(SKAction.sequence([move, remove]), withKey: "Move")
+        
+    }
+    
+    func spawnObstacles() {
+        let spawn = SKAction.run({ () -> Void in
+            self.createPipes()
+        })
+        
+        let delay = SKAction.wait(forDuration: 2, withRange: 10)
+        //   let delay = SKAction.wait(forDuration: TimeInterval(2))
+        let sequence = SKAction.sequence([spawn, delay])
+        
+        self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
+        
+    }
+    
+    
+    
 //    func createPlatforms() {
 //        platformHolder = SKSpriteNode()
 //        platformHolder.name = "Holder"
@@ -255,52 +325,6 @@ class GameScene: SKScene {
 //    }
     
     
-    func createPipes() {
-        pipesHolder = SKSpriteNode()
-        pipesHolder.name = "Holder"
-                
-        let pipeDown = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyName)
-
-        pipeDown.name = "Pipe"
-        pipeDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-      //  pipeDown.position = CGPoint(x: 7, y: 200)
-        pipeDown.position = CGPoint(x: 0.0, y: 119)
-
-        pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
-        
-        pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
-        pipeDown.physicsBody?.affectedByGravity = false
-        pipeDown.physicsBody?.isDynamic = false
-        
-        pipesHolder.zPosition = 5
-        pipesHolder.position.x = self.frame.width + 100
-
-//       pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
-        //pipesHolder.position = CGPoint(x: 300, y: 0);
-        
-        pipesHolder.addChild(pipeDown)
-        self.addChild(pipesHolder)
-        
-        let destination = self.frame.width 
-        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(8.5))
-        let remove = SKAction.removeFromParent()
-        
-        pipesHolder.run(SKAction.sequence([move, remove]), withKey: "Move")
-        
-    }
-    
-    func spawnObstacles() {
-        let spawn = SKAction.run({ () -> Void in
-            self.createPipes()
-        })
-       
-        let delay = SKAction.wait(forDuration: 2, withRange: 10)
-     //   let delay = SKAction.wait(forDuration: TimeInterval(2))
-        let sequence = SKAction.sequence([spawn, delay])
-        
-        self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
-        
-    }
     
     
     func addPlayer() {
