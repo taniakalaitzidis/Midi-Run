@@ -21,7 +21,11 @@ class GameScene: SKScene {
     var backgroundSunset: RepeatingLayer!
     
     var pipesHolder: SKSpriteNode!
+    //var platformHolder: SKSpriteNode!
 
+    var platformTimer: Timer?
+
+    
     
     var mapNode: SKNode!
     var tileMap: SKTileMapNode!
@@ -62,6 +66,7 @@ class GameScene: SKScene {
         
         createLayers()
     }
+    
     
     
     func createLayers() {
@@ -166,6 +171,88 @@ class GameScene: SKScene {
         
         addPlayer()
     }
+    
+
+    func startTimers() {
+        platformTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
+            self.createPlatform()
+        })
+    }
+
+    func createPlatform() {
+        let platform = SKSpriteNode(imageNamed: GameConstants.StringConstants.platformsName)
+      //  platform.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        platform.size = CGSize(width: 141, height: 47)
+        platform.zPosition = GameConstants.ZPositions.objectZ
+
+        platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: platform.size.width, height: platform.size.height))
+        platform.physicsBody?.affectedByGravity = false
+        platform.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
+        //platform.physicsBody?.collisionBitMask = 0
+        addChild(platform)
+
+        let maxY = size.height   - platform.size.height
+        let minY = -size.height  + platform.size.height 
+        let range = maxY - minY
+        let platformY = maxY - CGFloat(arc4random_uniform(UInt32(range)))
+
+        platform.position = CGPoint(x: size.width / 2 + platform.size.width / 2, y: platformY)
+
+
+      //  platform.position = CGPoint(x: size.width / 2 + platform.size.width / 2, y: coinY)
+
+        let moveLeft = SKAction.moveBy(x: -size.width - platform.size.width, y: 0, duration: 4)
+
+        platform.run(SKAction.sequence([moveLeft, SKAction.removeFromParent()]))
+    }
+    
+//
+//    func createPlatforms() {
+//        platformHolder = SKSpriteNode()
+//        platformHolder.name = "Holder"
+//
+//        let platformDown = SKSpriteNode(imageNamed: GameConstants.StringConstants.platformsName)
+//
+//        platformDown.name = "Platform"
+//        platformDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+//        //  pipeDown.position = CGPoint(x: 7, y: 200)
+//        platformDown.position = CGPoint(x: 0.0, y: 119)
+//
+//        platformDown.physicsBody = SKPhysicsBody(rectangleOf: platformDown.size)
+//
+//        platformDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
+//        platformDown.physicsBody?.affectedByGravity = false
+//        platformDown.physicsBody?.isDynamic = false
+//
+//        platformHolder.zPosition = 5
+//        platformHolder.position.x = self.frame.width + 100
+//
+//        //       pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
+//        //pipesHolder.position = CGPoint(x: 300, y: 0);
+//
+//        platformHolder.addChild(platformDown)
+//        self.addChild(platformHolder)
+//
+//        let destination = self.frame.width
+//        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(8.5))
+//        let remove = SKAction.removeFromParent()
+//
+//        platformHolder.run(SKAction.sequence([move, remove]), withKey: "Move")
+//
+//    }
+//
+//    func spawnPlatforms() {
+//        let spawn = SKAction.run({ () -> Void in
+//            self.createPlatforms()
+//        })
+//
+//        let delay = SKAction.wait(forDuration: 2, withRange: 10)
+//        //   let delay = SKAction.wait(forDuration: TimeInterval(2))
+//        let sequence = SKAction.sequence([spawn, delay])
+//
+//        self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
+//
+//    }
     
     
     func createPipes() {
@@ -302,6 +389,8 @@ class GameScene: SKScene {
             if !player.airborne {
                 jump()
                 spawnObstacles()
+                //spawnPlatforms()
+                startTimers()
 
             }
             
