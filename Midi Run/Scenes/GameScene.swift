@@ -186,8 +186,9 @@ class GameScene: SKScene {
         platform.zPosition = GameConstants.ZPositions.objectZ
 
         platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: platform.size.width, height: platform.size.height))
-        platform.physicsBody?.affectedByGravity = false
         platform.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
+        platform.physicsBody?.affectedByGravity = false
+        platform.physicsBody!.isDynamic = false
         //platform.physicsBody?.collisionBitMask = 0
         addChild(platform)
 //
