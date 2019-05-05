@@ -26,10 +26,7 @@ class GameScene: SKScene {
     var pipesHolder: SKSpriteNode!
     //var platformHolder: SKSpriteNode!
 
-    var platformTimer: Timer?
-
-    
-    
+    var platformTimer: Timer!
     var mapNode: SKNode!
     var tileMap: SKTileMapNode!
     //using exclamation point means we won't need an initializer because we initialize the properties below
@@ -68,9 +65,8 @@ class GameScene: SKScene {
         physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
         
         createLayers()
+        
     }
-    
-    
     
     func createLayers() {
         worldLayer = Layer()
@@ -175,37 +171,81 @@ class GameScene: SKScene {
         addPlayer()
     }
     
+    
 
     func startTimers() {
+        //we have timeinterval set to 3 seconds, so this means that the platforms will start appearing 3 seconds after the player taps
         platformTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
             self.createPlatform()
         })
     }
+    
+    func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+    
+    func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
+    }
 
     func createPlatform() {
+        // Needs major editing. I need the platforms to appear at three or four specific positions at random time intervals SEPERATELY. not at the same time.
+        // I believe it has to do with the two lines let randomPlatformPosition and let position.
+        
         platformsArray = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: platformsArray) as! [String]
         let platform = SKSpriteNode(imageNamed: platformsArray[0])
-        let randomPlatformPosition = GKRandomDistribution(lowestValue: 0, highestValue: 600)
-        let position = CGFloat(randomPlatformPosition.nextInt())
+//        let randomPlatformPosition = GKRandomDistribution(lowestValue: 700, highestValue: 900)
+//        let position = CGFloat(randomPlatformPosition.nextInt())
         platform.zPosition = GameConstants.ZPositions.objectZ
         platform.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        platform.position = CGPoint(x: 0.0, y: 300)
-        platform.position.x = self.frame.width + 100
+    //    platform.position = CGPoint(x: 0.0, y: 300)
+       // platform.position.x = self.frame.width + 100
 
         platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: platform.size.width, height: platform.size.height))
-        platform.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
-        platform.physicsBody?.affectedByGravity = false
+        platform.physicsBody!.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
+        platform.physicsBody!.affectedByGravity = false
         platform.physicsBody!.isDynamic = false
-        platform.physicsBody?.collisionBitMask = 0
+        platform.physicsBody!.collisionBitMask = 0
         addChild(platform)
         
-        let animationDuration: TimeInterval = 6
-        var actionArray = [SKAction]()
+          // Determine where to spawn the monster along the Y axis
+        let actualY = random(min: 200, max: 400)
         
-        actionArray.append(SKAction.move(to: CGPoint(x: -position, y: platform.size.height), duration: animationDuration))
-        actionArray.append(SKAction.removeFromParent())
-        platform.run(SKAction.sequence(actionArray))
+        // Position the monster slightly off-screen along the right edge,
+        // and along a random position along the Y axis as calculated above
+        platform.position = CGPoint(x: size.width + platform.size.width/2, y: actualY)
+        
+        // Add the monster to the scene
+        
+        // Determine speed of the monster
+        let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+        
+        // Create the actions
+        let actionMove = SKAction.move(to: CGPoint(x: -platform.size.width, y: actualY), duration: TimeInterval(actualDuration))
+        let actionMoveDone = SKAction.removeFromParent()
 
+        platform.run(SKAction.sequence([actionMove, actionMoveDone]))
+        
+        
+//        let moveUp = SKAction.moveBy(x: 0, y: 200, duration: 2)
+//        let sequence = SKAction.sequence([moveUp, moveUp.reversed()])
+//        platform.run(SKAction.repeatForever(sequence), withKey:  "moving")
+//
+//        let animationDuration: TimeInterval = 6 //change how fast or slow it moves
+//        var actionArray = [SKAction]()
+//
+//        actionArray.append(SKAction.move(to: CGPoint(x: -position, y: platform.size.height), duration: animationDuration))
+//        actionArray.append(SKAction.removeFromParent())
+//        platform.run(SKAction.sequence(actionArray))
+
+        //        let distanceToMove = CGFloat(self.frame.size.width + platform.size.width)
+        //        let movePlatform = SKAction.moveBy(x: -distanceToMove, y:0.0, duration:TimeInterval(0.01 * distanceToMove))
+        //        let removePlatform = SKAction.removeFromParent()
+        //        let movePlatformAndRemove = SKAction.sequence([movePlatform, removePlatform])
+        //        platform.run(movePlatformAndRemove)
+
+        
+        
 //       // let platform = SKSpriteNode(imageNamed: GameConstants.StringConstants.platformsName)
 //        platform.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 //        platform.position = CGPoint(x: 0.0, y: 300)
@@ -292,7 +332,6 @@ class GameScene: SKScene {
         pipeDown.position = CGPoint(x: 0.0, y: 119)
         
         pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
-        
         pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
         pipeDown.physicsBody?.affectedByGravity = false
         pipeDown.physicsBody?.isDynamic = false
@@ -309,7 +348,6 @@ class GameScene: SKScene {
         let destination = self.frame.width
         let move = SKAction.moveTo(x: -destination, duration: TimeInterval(4.8))
         let remove = SKAction.removeFromParent()
-        
         pipesHolder.run(SKAction.sequence([move, remove]), withKey: "Move")
         
     }
@@ -532,6 +570,8 @@ class GameScene: SKScene {
     
 }
 
+
+
 extension GameScene: SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -563,3 +603,6 @@ extension GameScene: SKPhysicsContactDelegate {
         }
     }
 }
+
+
+
