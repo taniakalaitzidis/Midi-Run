@@ -40,7 +40,10 @@ struct GameConstants {
         static let playerImageName = "idle0"
         static let groundNodeName = "ground"
         static let enemyName = "redtile"
-        static let platformsName = "platform14"
+        static let platform12 = "platform12"
+        static let platform13 = "platform13"
+        static let platform14 = "platform14"
+        static let platform15 = "platform15"
         
         static let playerIdleAtlas = "Player Idle Atlas"
         static let playerRunAtlas = "Player Run Atlas"

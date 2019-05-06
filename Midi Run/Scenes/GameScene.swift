@@ -170,16 +170,17 @@ class GameScene: SKScene {
         
         addPlayer()
     }
-    
-    
 
     func startTimers() {
         //we have timeinterval set to 3 seconds, so this means that the platforms will start appearing 3 seconds after the player taps
-        platformTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { (timer) in
+        // I changed repeats from true to false and that caused a lot less nodes to appear....
+        platformTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
             self.createPlatform()
         })
     }
-    
+//
+//    0xFFFFFFFF is equal to (2^32)-1, which is the largest possible value of arc4random(). So the arithmetic expression (arc4random() / 0xFFFFFFFF)
+//    gives you a ratio that is always between 0 and 1 — and as this is an integer division, the result can only be between 0 and 1.
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
@@ -218,7 +219,9 @@ class GameScene: SKScene {
         // Add the monster to the scene
         
         // Determine speed of the monster
-        let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+       let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+        
+        
         
         // Create the actions
         let actionMove = SKAction.move(to: CGPoint(x: -platform.size.width, y: actualY), duration: TimeInterval(actualDuration))
@@ -226,98 +229,7 @@ class GameScene: SKScene {
 
         platform.run(SKAction.sequence([actionMove, actionMoveDone]))
         
-        
-//        let moveUp = SKAction.moveBy(x: 0, y: 200, duration: 2)
-//        let sequence = SKAction.sequence([moveUp, moveUp.reversed()])
-//        platform.run(SKAction.repeatForever(sequence), withKey:  "moving")
-//
-//        let animationDuration: TimeInterval = 6 //change how fast or slow it moves
-//        var actionArray = [SKAction]()
-//
-//        actionArray.append(SKAction.move(to: CGPoint(x: -position, y: platform.size.height), duration: animationDuration))
-//        actionArray.append(SKAction.removeFromParent())
-//        platform.run(SKAction.sequence(actionArray))
-
-        //        let distanceToMove = CGFloat(self.frame.size.width + platform.size.width)
-        //        let movePlatform = SKAction.moveBy(x: -distanceToMove, y:0.0, duration:TimeInterval(0.01 * distanceToMove))
-        //        let removePlatform = SKAction.removeFromParent()
-        //        let movePlatformAndRemove = SKAction.sequence([movePlatform, removePlatform])
-        //        platform.run(movePlatformAndRemove)
-
-        
-        
-//       // let platform = SKSpriteNode(imageNamed: GameConstants.StringConstants.platformsName)
-//        platform.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-//        platform.position = CGPoint(x: 0.0, y: 300)
-//        platform.position.x = self.frame.width + 100
-//
-//        platform.size = CGSize(width: 141, height: 47)
-//        platform.zPosition = GameConstants.ZPositions.objectZ
-//
-//        platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: platform.size.width, height: platform.size.height))
-//        platform.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
-//        platform.physicsBody?.affectedByGravity = false
-//        platform.physicsBody!.isDynamic = false
-//        //platform.physicsBody?.collisionBitMask = 0
-//        addChild(platform)
-//
-//        for _ in 1...3 {
-//            let platformTest = Int.random(in: 100..<400)
-//            platform.position = CGPoint(x: size.width + platform.size.width / 2, y: platformTest)
-//
-//        }
-        
-//        let maxY = size.height - platform.size.height
-//        let minY = -size.height + platform.size.height
-//        let range = Int.random(in: 400...450)
-//        let platformY = CGFloat(arc4random_uniform(UInt32(range)))
-//
-//        platform.position = CGPoint(x: size.width + platform.size.width / 2, y: platformY)
-//
-//        let moveLeft = SKAction.moveBy(x: -size.width - platform.size.width, y: 0, duration: 3.5)
-//
-//        platform.run(SKAction.sequence([moveLeft, SKAction.removeFromParent()]))
-        
-//        let destination = self.frame.width
-//        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(8.5))
-//        let remove = SKAction.removeFromParent()
-//
-//        platform.run(SKAction.sequence([move, remove]), withKey: "Move")
-//
-        //platform.position.y = CGFloat.randomBetweenNumbers(firstNum: 0, secondNum: )
-        //platform.position = CGPoint(x: 300, y: 100)
-//
-//        let positions = [CGPoint(x: self.frame.size.width, y: 25), CGPoint(x: self.frame.size.width, y: 25), CGPoint(x: self.frame.size.width, y:-70)]
-//
-//        let randomPositionIndex = Int(arc4random_uniform(UInt32(positions.count)))
-//        platform.position = positions[randomPositionIndex]
-//
-//
-//
-//        let maxY = size.height - platform.size.height
-//        let minY = -size.height + platform.size.height
-//        let range = maxY - minY
-//        let platformY = maxY - CGFloat(arc4random_uniform(UInt32(range)))
-//
-//        platform.position = CGPoint(x: size.width + platform.size.width / 8, y: platformY)
-//
-//        let moveLeft = SKAction.moveBy(x: -size.width - platform.size.width, y: 0, duration: 4)
-
     }
-    
-//
-//    func spawnPlatforms() {
-//        let spawn = SKAction.run({ () -> Void in
-//            self.createPlatform()
-//        })
-//
-//        let delay = SKAction.wait(forDuration: 4, withRange: 10)
-//        //   let delay = SKAction.wait(forDuration: TimeInterval(2))
-//        let sequence = SKAction.sequence([spawn, delay])
-//
-//        self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
-////
-//    }
     
     
     func createPipes() {
@@ -338,10 +250,7 @@ class GameScene: SKScene {
         
         pipesHolder.zPosition = 5
         pipesHolder.position.x = self.frame.width + 100
-        
-        //       pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
-        //pipesHolder.position = CGPoint(x: 300, y: 0);
-        
+     
         pipesHolder.addChild(pipeDown)
         self.addChild(pipesHolder)
         
@@ -364,57 +273,6 @@ class GameScene: SKScene {
         self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
         
     }
-    
-    
-    
-//    func createPlatforms() {
-//        platformHolder = SKSpriteNode()
-//        platformHolder.name = "Holder"
-//
-//        let platformDown = SKSpriteNode(imageNamed: GameConstants.StringConstants.platformsName)
-//
-//        platformDown.name = "Platform"
-//        platformDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-//        //  pipeDown.position = CGPoint(x: 7, y: 200)
-//        platformDown.position = CGPoint(x: 0.0, y: 119)
-//
-//        platformDown.physicsBody = SKPhysicsBody(rectangleOf: platformDown.size)
-//
-//        platformDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
-//        platformDown.physicsBody?.affectedByGravity = false
-//        platformDown.physicsBody?.isDynamic = false
-//
-//        platformHolder.zPosition = 5
-//        platformHolder.position.x = self.frame.width + 100
-//
-//        //       pipesHolder.position.y = CGFloat.randomBetweenNumbers(firstNum: 800)
-//        //pipesHolder.position = CGPoint(x: 300, y: 0);
-//
-//        platformHolder.addChild(platformDown)
-//        self.addChild(platformHolder)
-//
-//        let destination = self.frame.width
-//        let move = SKAction.moveTo(x: -destination, duration: TimeInterval(8.5))
-//        let remove = SKAction.removeFromParent()
-//
-//        platformHolder.run(SKAction.sequence([move, remove]), withKey: "Move")
-//
-//    }
-//
-//    func spawnPlatforms() {
-//        let spawn = SKAction.run({ () -> Void in
-//            self.createPlatforms()
-//        })
-//
-//        let delay = SKAction.wait(forDuration: 2, withRange: 10)
-//        //   let delay = SKAction.wait(forDuration: TimeInterval(2))
-//        let sequence = SKAction.sequence([spawn, delay])
-//
-//        self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
-//
-//    }
-    
-    
     
     
     func addPlayer() {
@@ -503,8 +361,8 @@ class GameScene: SKScene {
             if !player.airborne {
                 jump()
                 spawnObstacles()
-                //spawnPlatforms()
                 startTimers()
+
 
             }
             
