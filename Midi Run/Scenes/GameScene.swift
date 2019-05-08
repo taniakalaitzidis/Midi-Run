@@ -271,7 +271,7 @@ class GameScene: SKScene {
         let sequence = SKAction.sequence([spawn, delay])
         
         self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
-        
+       
     }
     
     
@@ -329,6 +329,7 @@ class GameScene: SKScene {
         die(reason: 0)
     }
     
+ 
     func die(reason: Int) {
         gameState = .finished
         player.turnGravity(on: false)
@@ -336,6 +337,7 @@ class GameScene: SKScene {
         switch reason {
         case 0:
             deathAnimation = SKAction.animate(with: player.dieFrames, timePerFrame: 0.1, resize: true, restore: true)
+            
         case 1:
             let up = SKAction.moveTo(y: frame.midY, duration: 0.25)
             let wait = SKAction.wait(forDuration: 0.1)
@@ -353,6 +355,9 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let gameScene = GameScene(size: size)
+        gameScene.scaleMode = scaleMode
+        
         switch gameState {
         case .ready:
             gameState = .ongoing
@@ -362,8 +367,6 @@ class GameScene: SKScene {
                 jump()
                 spawnObstacles()
                 startTimers()
-
-
             }
             
          //   } else if !brake {

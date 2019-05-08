@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-            let scene = GameScene(size: view.bounds.size)
+            let scene = MenuScene(size: view.bounds.size)
             scene.scaleMode = .aspectFill
             //entire scene will be filled
             
