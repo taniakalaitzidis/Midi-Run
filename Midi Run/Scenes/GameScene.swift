@@ -13,6 +13,8 @@ enum GameState {
     case ready, ongoing, paused, finished
 }
 
+
+
 class GameScene: SKScene {
     
     var worldLayer: Layer!
@@ -22,6 +24,19 @@ class GameScene: SKScene {
     var backgroundSunset: RepeatingLayer!
     
     var platformsArray = ["platform12", "platform13", "platform14", "platform15"]
+    
+    var isGamePaused = false
+    
+    var scoreLabel: SKLabelNode!
+    var counter = 0
+    var gameStateIsInGame = true
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
+    
     
     var pipesHolder: SKSpriteNode!
     //var platformHolder: SKSpriteNode!
@@ -41,8 +56,10 @@ class GameScene: SKScene {
             switch newValue {
             case .ongoing:
                 player.state = .running
+              //  pauseEnemies(bool: false)
             case .finished:
                 player.state = .idle
+               // pauseEnemies(bool: true)
             default:
                 break
                 
@@ -56,6 +73,12 @@ class GameScene: SKScene {
    // var brake = false
 
     override func didMove(to view: SKView) {
+        scoreLabel = SKLabelNode(fontNamed: "Press Start K")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.position = CGPoint(x: 150.0, y: 620.0)
+        scoreLabel.zPosition = GameConstants.ZPositions.hudZ
+        addChild(scoreLabel)
+        
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -6.0)
         // the physicsWorld.gravity is where you can change how fast or slow the player falls in the game
@@ -65,8 +88,11 @@ class GameScene: SKScene {
         physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
         
         createLayers()
+        isPaused = true
+        isPaused = false
         
     }
+    
     
     func createLayers() {
         worldLayer = Layer()
@@ -114,6 +140,7 @@ class GameScene: SKScene {
         for i in 0...1 {
             let backgroundGroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.groundNodeName)
             backgroundGroundImage.name = String(i)
+            backgroundGroundImage.scale(to: frame.size, width: false, multiplier: 1.0)
             backgroundGroundImage.size = CGSize(width: 1237, height: 142)
             backgroundGroundImage.anchorPoint = CGPoint.zero
             backgroundGroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundGroundImage.size.width, y: 0.0)
@@ -153,6 +180,8 @@ class GameScene: SKScene {
             loadTileMap()
         }
     }
+    
+    
     
     func loadTileMap() {
         if let coloredTiles = mapNode.childNode(withName: GameConstants.StringConstants.coloredTilesName) as? SKTileMapNode {
@@ -234,7 +263,7 @@ class GameScene: SKScene {
     
     func createPipes() {
         pipesHolder = SKSpriteNode()
-        pipesHolder.name = "Holder"
+        pipesHolder!.name = "Holder"
         
         let pipeDown = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyName)
         
@@ -274,7 +303,6 @@ class GameScene: SKScene {
        
     }
     
-    
     func addPlayer() {
         player = Player(imageNamed: GameConstants.StringConstants.playerImageName)
         player.scale(to: frame.size, width: false, multiplier: 0.1)
@@ -287,6 +315,10 @@ class GameScene: SKScene {
         addChild(player)
         addPlayerActions()
         
+    }
+    
+    func pauseWhenDead() {
+       pipesHolder.isPaused = true
     }
     
     func addPlayerActions() {
@@ -328,8 +360,13 @@ class GameScene: SKScene {
     func handleEnemyContact() {
         die(reason: 0)
     }
+//
+//    func pauseEnemies(bool: Bool) {
+//        for enemy in tileMap[GameConstants.StringConstants.enemyName] {
+//            enemy.isPaused = bool
+//        }
+//    }
     
- 
     func die(reason: Int) {
         gameState = .finished
         player.turnGravity(on: false)
@@ -337,6 +374,7 @@ class GameScene: SKScene {
         switch reason {
         case 0:
             deathAnimation = SKAction.animate(with: player.dieFrames, timePerFrame: 0.1, resize: true, restore: true)
+            
             
         case 1:
             let up = SKAction.moveTo(y: frame.midY, duration: 0.25)
@@ -349,24 +387,26 @@ class GameScene: SKScene {
         }
         
         player.run(deathAnimation) {
+            //pausing the entire scene when you die
+            self.scene!.isPaused = true
             self.player.removeFromParent()
+           
         }
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let gameScene = GameScene(size: size)
-        gameScene.scaleMode = scaleMode
-        
         switch gameState {
         case .ready:
             gameState = .ongoing
+            spawnObstacles()
         case .ongoing:
             touch = true
             if !player.airborne {
                 jump()
-                spawnObstacles()
                 startTimers()
+
+                
             }
             
          //   } else if !brake {
@@ -415,9 +455,17 @@ class GameScene: SKScene {
 
         }
         
-        
-      
+        if gameStateIsInGame {
+            if counter >= 10 {
+                score += 1
+                counter = 0
+            } else {
+                counter += 1
+            }
+        }
     }
+      
+    
     
     override func didSimulatePhysics() {
         for node in tileMap[GameConstants.StringConstants.groundNodeName] {
@@ -429,7 +477,10 @@ class GameScene: SKScene {
         }
     }
     
+    
 }
+
+
 
 
 
@@ -451,6 +502,7 @@ extension GameScene: SKPhysicsContactDelegate {
         default:
             break
         }
+        
     }
     
     func didEnd(_ contact: SKPhysicsContact) {

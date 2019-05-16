@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A0C08D32284687A00CF4290 /* prstartk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A0C08D22284677C00CF4290 /* prstartk.ttf */; };
 		6A321EFB223FC9F1006000E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A321EFA223FC9F1006000E6 /* Assets.xcassets */; };
 		6A3B247D21D41CA100474B87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3B247C21D41CA100474B87 /* AppDelegate.swift */; };
 		6A3B248321D41CA100474B87 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3B248221D41CA100474B87 /* GameScene.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A0C08D22284677C00CF4290 /* prstartk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = prstartk.ttf; sourceTree = "<group>"; };
 		6A321EFA223FC9F1006000E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Midi Run/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		6A3B247921D41CA100474B87 /* Midi Run.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Midi Run.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A3B247C21D41CA100474B87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A0C08D12284677600CF4290 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				6A0C08D22284677C00CF4290 /* prstartk.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		6A3B247021D41CA100474B87 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +122,7 @@
 				6A3B249621D41CA200474B87 /* Midi RunTests */,
 				6A3B24A121D41CA200474B87 /* Midi RunUITests */,
 				6A3B247A21D41CA100474B87 /* Products */,
+				6A0C08D12284677600CF4290 /* Fonts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -368,6 +379,7 @@
 				6A321EFB223FC9F1006000E6 /* Assets.xcassets in Resources */,
 				6A3B24B921D4230500474B87 /* Level_0-1.sks in Resources */,
 				6A3B248D21D41CA200474B87 /* LaunchScreen.storyboard in Resources */,
+				6A0C08D32284687A00CF4290 /* prstartk.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
