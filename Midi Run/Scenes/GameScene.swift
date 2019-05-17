@@ -56,10 +56,8 @@ class GameScene: SKScene {
             switch newValue {
             case .ongoing:
                 player.state = .running
-              //  pauseEnemies(bool: false)
             case .finished:
                 player.state = .idle
-               // pauseEnemies(bool: true)
             default:
                 break
                 
@@ -88,8 +86,7 @@ class GameScene: SKScene {
         physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
         
         createLayers()
-        isPaused = true
-        isPaused = false
+        
         
     }
     
@@ -201,9 +198,9 @@ class GameScene: SKScene {
     }
 
     func startTimers() {
-        //we have timeinterval set to 3 seconds, so this means that the platforms will start appearing 3 seconds after the player taps
+        //we have timeinterval set to 2 seconds, so this means that the platforms will start appearing 3 seconds after the player taps
         // I changed repeats from true to false and that caused a lot less nodes to appear....
-        platformTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
+        platformTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (timer) in
             self.createPlatform()
         })
     }
@@ -317,9 +314,7 @@ class GameScene: SKScene {
         
     }
     
-    func pauseWhenDead() {
-       pipesHolder.isPaused = true
-    }
+  
     
     func addPlayerActions() {
         
@@ -360,12 +355,6 @@ class GameScene: SKScene {
     func handleEnemyContact() {
         die(reason: 0)
     }
-//
-//    func pauseEnemies(bool: Bool) {
-//        for enemy in tileMap[GameConstants.StringConstants.enemyName] {
-//            enemy.isPaused = bool
-//        }
-//    }
     
     func die(reason: Int) {
         gameState = .finished
@@ -393,6 +382,26 @@ class GameScene: SKScene {
            
         }
         
+        let gameOver = SKSpriteNode(imageNamed: "gameOver")
+        gameOver.name = "Game Over"
+        gameOver.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        gameOver.position = CGPoint(x: 190, y: 400)
+        gameOver.zPosition = 6
+        self.addChild(gameOver)
+        
+        let restart = SKSpriteNode(imageNamed: "restart")
+        restart.name = "Restart"
+        restart.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        restart.position = CGPoint(x: 100, y: 270)
+        restart.zPosition = 7
+        self.addChild(restart)
+        
+        let quit = SKSpriteNode(imageNamed: "quit")
+        quit.name = "Quit"
+        quit.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        quit.position = CGPoint(x: 300, y: 270)
+        quit.zPosition = 7
+        self.addChild(quit)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -405,8 +414,6 @@ class GameScene: SKScene {
             if !player.airborne {
                 jump()
                 startTimers()
-
-                
             }
             
          //   } else if !brake {
@@ -414,6 +421,74 @@ class GameScene: SKScene {
             
         default:
             break
+        }
+        
+        for touch in touches {
+            let location = touch.location(in: self)
+            
+            if atPoint(location).name == "Restart" {
+                //Restart The Game
+                self.removeAllActions()
+                self.removeAllChildren()
+                
+                //copied from GameViewController to restart the scene
+                if let view = self.view as! SKView? {
+                    let scene = GameScene(size: view.bounds.size)
+                    
+                    scene.scaleMode = .aspectFill
+                    //entire scene will be filled
+                    
+                    view.presentScene(scene)
+                    
+                    view.ignoresSiblingOrder = true
+                    // child nodes within scene do not have to be rendered hierarchically = better performance
+                    
+                    //below is debugging information = efficiency of code thats written
+                    
+                    view.showsFPS = true
+                    //shows frames per seconds
+                    
+                    view.showsNodeCount = true
+                    // shows amount of nodes
+                    
+                    view.showsPhysics = true
+                    //shows the blue lines around any physics
+                    
+                }
+                
+            }
+            
+            if atPoint(location).name == "Quit" {
+                if let view = self.view as! SKView? {
+                    let scene = MenuScene(size: view.bounds.size)
+                    
+                    scene.scaleMode = .aspectFill
+                    //entire scene will be filled
+                    
+                    view.presentScene(scene)
+                    
+                    view.ignoresSiblingOrder = true
+                    // child nodes within scene do not have to be rendered hierarchically = better performance
+                    
+                    //below is debugging information = efficiency of code thats written
+                    
+                    view.showsFPS = true
+                    //shows frames per seconds
+                    
+                    view.showsNodeCount = true
+                    // shows amount of nodes
+                    
+                    view.showsPhysics = true
+                    //shows the blue lines around any physics
+                    
+                }
+            }
+            
+//            if atPoint(location).name == "Quit" {
+//                let mainMenu = MainMenuScene(fileNamed: "MainMenuScene");
+//                mainMenu?.scaleMode = .aspectFill
+//                self.view?.presentScene(mainMenu!, transition: SKTransition.doorway(withDuration: TimeInterval(1)));
+//            }
         }
        
     }
