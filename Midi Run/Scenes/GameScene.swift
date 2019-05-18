@@ -13,8 +13,6 @@ enum GameState {
     case ready, ongoing, paused, finished
 }
 
-
-
 class GameScene: SKScene {
     
     var worldLayer: Layer!
@@ -29,14 +27,11 @@ class GameScene: SKScene {
     
     var scoreLabel: SKLabelNode!
     var counter = 0
-    var gameStateIsInGame = true
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
         }
     }
-    
-    
     
     var pipesHolder: SKSpriteNode!
     //var platformHolder: SKSpriteNode!
@@ -198,7 +193,7 @@ class GameScene: SKScene {
     }
 
     func startTimers() {
-        //we have timeinterval set to 2 seconds, so this means that the platforms will start appearing 3 seconds after the player taps
+        //we have timeinterval set to 1 seconds, so this means that the platforms will start appearing 1 seconds after the player taps
         // I changed repeats from true to false and that caused a lot less nodes to appear....
         platformTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (timer) in
             self.createPlatform()
@@ -315,7 +310,6 @@ class GameScene: SKScene {
     }
     
   
-    
     func addPlayerActions() {
         
         let up = SKAction.moveBy(x: 0.0, y: frame.size.height/4, duration: 0.4)
@@ -364,7 +358,6 @@ class GameScene: SKScene {
         case 0:
             deathAnimation = SKAction.animate(with: player.dieFrames, timePerFrame: 0.1, resize: true, restore: true)
             
-            
         case 1:
             let up = SKAction.moveTo(y: frame.midY, duration: 0.25)
             let wait = SKAction.wait(forDuration: 0.1)
@@ -409,6 +402,7 @@ class GameScene: SKScene {
         case .ready:
             gameState = .ongoing
             spawnObstacles()
+            
         case .ongoing:
             touch = true
             if !player.airborne {
@@ -455,40 +449,20 @@ class GameScene: SKScene {
                     //shows the blue lines around any physics
                     
                 }
-                
             }
             
             if atPoint(location).name == "Quit" {
+                //copied from GameViewController but calling MenuScene.swift; when quitting the game, it will take you to the menu
                 if let view = self.view as! SKView? {
                     let scene = MenuScene(size: view.bounds.size)
-                    
                     scene.scaleMode = .aspectFill
-                    //entire scene will be filled
-                    
                     view.presentScene(scene)
-                    
                     view.ignoresSiblingOrder = true
-                    // child nodes within scene do not have to be rendered hierarchically = better performance
-                    
-                    //below is debugging information = efficiency of code thats written
-                    
                     view.showsFPS = true
-                    //shows frames per seconds
-                    
                     view.showsNodeCount = true
-                    // shows amount of nodes
-                    
                     view.showsPhysics = true
-                    //shows the blue lines around any physics
-                    
                 }
             }
-            
-//            if atPoint(location).name == "Quit" {
-//                let mainMenu = MainMenuScene(fileNamed: "MainMenuScene");
-//                mainMenu?.scaleMode = .aspectFill
-//                self.view?.presentScene(mainMenu!, transition: SKTransition.doorway(withDuration: TimeInterval(1)));
-//            }
         }
        
     }
@@ -520,6 +494,12 @@ class GameScene: SKScene {
            // backgroundClouds.update(dt)
             backgroundGround.update(dt)
             backgroundSunset.update(dt)
+            if counter >= 10 {
+                score += 1
+                counter = 0
+            } else {
+                counter += 1
+            }
             
             if player.physicsBody?.velocity.dy == 0 {
                 ableToJump = true
@@ -527,20 +507,8 @@ class GameScene: SKScene {
             else {
                 ableToJump = false
             }
-
-        }
-        
-        if gameStateIsInGame {
-            if counter >= 10 {
-                score += 1
-                counter = 0
-            } else {
-                counter += 1
-            }
         }
     }
-      
-    
     
     override func didSimulatePhysics() {
         for node in tileMap[GameConstants.StringConstants.groundNodeName] {
@@ -551,13 +519,7 @@ class GameScene: SKScene {
             }
         }
     }
-    
-    
 }
-
-
-
-
 
 extension GameScene: SKPhysicsContactDelegate {
     
@@ -591,6 +553,3 @@ extension GameScene: SKPhysicsContactDelegate {
         }
     }
 }
-
-
-
