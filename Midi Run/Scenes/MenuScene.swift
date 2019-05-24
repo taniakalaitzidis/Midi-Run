@@ -10,8 +10,19 @@ import SpriteKit
 
 class MenuScene: SKScene {
     
+    var scoreLabel: SKLabelNode!
+    var fontSize: CGFloat!
+
+    
     override func didMove(to view: SKView) {
         layoutView()
+        
+        scoreLabel = SKLabelNode(fontNamed: "Press Start K")
+        scoreLabel.text = "Highscore: 0"
+        scoreLabel.fontSize = 22
+        scoreLabel.position = CGPoint(x: 170.0, y: 200.0)
+        scoreLabel.zPosition = GameConstants.ZPositions.hudZ
+        addChild(scoreLabel)
     }
     
     func layoutView() {

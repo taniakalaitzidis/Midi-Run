@@ -68,7 +68,8 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         scoreLabel = SKLabelNode(fontNamed: "Press Start K")
         scoreLabel.text = "Score: 0"
-        scoreLabel.position = CGPoint(x: 150.0, y: 620.0)
+        scoreLabel.fontSize = 22
+        scoreLabel.position = CGPoint(x: 120.0, y: 620.0)
         scoreLabel.zPosition = GameConstants.ZPositions.hudZ
         addChild(scoreLabel)
         
@@ -113,7 +114,7 @@ class GameScene: SKScene {
             backgroundImage.name = String(i)
             backgroundImage.scale(to: frame.size, width: false, multiplier: 1.0)
             backgroundImage.anchorPoint = CGPoint.zero
-            backgroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundImage.size.width, y: 135.0)
+            backgroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundImage.size.width, y: 90.0)
             backgroundLayer.addChild(backgroundImage)
         }
         
@@ -133,7 +134,7 @@ class GameScene: SKScene {
             let backgroundGroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.groundNodeName)
             backgroundGroundImage.name = String(i)
             backgroundGroundImage.scale(to: frame.size, width: false, multiplier: 1.0)
-            backgroundGroundImage.size = CGSize(width: 1237, height: 142)
+            backgroundGroundImage.size = CGSize(width: 1237, height: 94)
             backgroundGroundImage.anchorPoint = CGPoint.zero
             backgroundGroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundGroundImage.size.width, y: 0.0)
             backgroundGroundImage.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: backgroundGroundImage.size.width , height: backgroundGroundImage.size.height * 2.0))
@@ -149,7 +150,7 @@ class GameScene: SKScene {
             backgroundSunsetImage.name = String(i)
             backgroundSunsetImage.scale(to: frame.size, width: false, multiplier: 1.0)
             backgroundSunsetImage.anchorPoint = CGPoint.zero
-            backgroundSunsetImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundSunsetImage.size.width, y: 135.0)
+            backgroundSunsetImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundSunsetImage.size.width, y: 100.0)
             backgroundSunset.addChild(backgroundSunsetImage)
         }
         
@@ -430,23 +431,16 @@ class GameScene: SKScene {
                     let scene = GameScene(size: view.bounds.size)
                     
                     scene.scaleMode = .aspectFill
-                    //entire scene will be filled
                     
                     view.presentScene(scene)
                     
                     view.ignoresSiblingOrder = true
-                    // child nodes within scene do not have to be rendered hierarchically = better performance
-                    
-                    //below is debugging information = efficiency of code thats written
                     
                     view.showsFPS = true
-                    //shows frames per seconds
                     
                     view.showsNodeCount = true
-                    // shows amount of nodes
                     
                     view.showsPhysics = true
-                    //shows the blue lines around any physics
                     
                 }
             }
@@ -476,7 +470,6 @@ class GameScene: SKScene {
         touch = false
         player.turnGravity(on: true)
     }
-    
     
     //over here, we have a parameter "currentTime" as a time interval, which is the system time.
     //long story short, it'll result in smooth animation and will allow the map to move from left to right
