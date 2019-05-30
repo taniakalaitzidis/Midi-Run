@@ -68,8 +68,8 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         scoreLabel = SKLabelNode(fontNamed: "Press Start K")
         scoreLabel.text = "Score: 0"
-        scoreLabel.fontSize = 22
-        scoreLabel.position = CGPoint(x: 120.0, y: 620.0)
+        scoreLabel.fontSize = 16
+        scoreLabel.position = CGPoint(x: 100.0, y: 640.0)
         scoreLabel.zPosition = GameConstants.ZPositions.hudZ
         addChild(scoreLabel)
         
@@ -110,11 +110,11 @@ class GameScene: SKScene {
 
         // the for in 0...1 means it will run twice; repeating effect
         for i in 0...1 {
-            let backgroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.worldBackgroundNames)
+            let backgroundImage = SKSpriteNode(imageNamed: "NEWbackgroundsmaller")
             backgroundImage.name = String(i)
-            backgroundImage.scale(to: frame.size, width: false, multiplier: 1.0)
+            backgroundImage.scale(to: frame.size, width: false, multiplier: 0.90)
             backgroundImage.anchorPoint = CGPoint.zero
-            backgroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundImage.size.width, y: 90.0)
+            backgroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundImage.size.width, y: 70.0)
             backgroundLayer.addChild(backgroundImage)
         }
         
@@ -146,9 +146,9 @@ class GameScene: SKScene {
         }
         
         for i in 0...1 {
-            let backgroundSunsetImage = SKSpriteNode(imageNamed: "backgroundSunset")
+            let backgroundSunsetImage = SKSpriteNode(imageNamed: "NEWbackgroundsmallerEDITED")
             backgroundSunsetImage.name = String(i)
-            backgroundSunsetImage.scale(to: frame.size, width: false, multiplier: 1.0)
+            backgroundSunsetImage.scale(to: frame.size, width: false, multiplier: 0.85)
             backgroundSunsetImage.anchorPoint = CGPoint.zero
             backgroundSunsetImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundSunsetImage.size.width, y: 100.0)
             backgroundSunset.addChild(backgroundSunsetImage)
