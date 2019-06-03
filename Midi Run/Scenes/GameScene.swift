@@ -25,7 +25,11 @@ class GameScene: SKScene {
     
     var isGamePaused = false
     
+    var highScoreLabel: SKLabelNode!
+    var currentHighScore = UserDefaults.standard.integer(forKey: "tinyBazooka_highscore")
+    var fontSize: CGFloat!
     var scoreLabel: SKLabelNode!
+    var highScore = 0
     var counter = 0
     var score = 0 {
         didSet {
@@ -396,6 +400,29 @@ class GameScene: SKScene {
         quit.position = CGPoint(x: 300, y: 270)
         quit.zPosition = 7
         self.addChild(quit)
+        
+        
+        let highScoreLabel = SKLabelNode(fontNamed: "Press Start K")
+        highScoreLabel.text = "Highscore: 0"
+        highScoreLabel.fontSize = 18
+        highScoreLabel.position = CGPoint(x: 170.0, y: 300.0)
+        highScoreLabel.zPosition = 8
+        addChild(highScoreLabel)
+        
+        if (score > currentHighScore) {
+            
+            UserDefaults.standard.set(score, forKey: "tinyBazooka_highscore")
+            
+            UserDefaults.standard.synchronize()
+            
+            highScoreLabel.text = "New High Score: \(score) !"
+            
+            
+        } else {
+            
+            highScoreLabel.text = "You can do better than that! \(score)"
+            
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -494,6 +521,11 @@ class GameScene: SKScene {
                 counter += 1
             }
             
+            if score > highScore {
+                highScore = score
+            }
+            
+        
             if player.physicsBody?.velocity.dy == 0 {
                 ableToJump = true
             }
