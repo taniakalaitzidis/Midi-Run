@@ -34,14 +34,14 @@ struct GameConstants {
     }
     
     struct StringConstants {
-        static let gameName = "MIDIRun"
+        static let gameName = "MIDIRun-long"
         static let startGame = "tapToStart"
         static let coloredTilesName = "Colored Tiles"
         static let worldBackgroundNames = "backgroundsmaller"
         static let playerName = "Player"
         static let playerImageName = "idle0"
         static let groundNodeName = "ground"
-        static let enemyName = "redtile"
+        static let enemyName = "enemy1"
         
         static let playerIdleAtlas = "Player Idle Atlas"
         static let playerRunAtlas = "Player Run Atlas"

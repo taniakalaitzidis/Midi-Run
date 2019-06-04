@@ -26,7 +26,7 @@ class GameScene: SKScene {
     var isGamePaused = false
     
     var highScoreLabel: SKLabelNode!
-    var currentHighScore = UserDefaults.standard.integer(forKey: "tinyBazooka_highscore")
+    var currentHighScore = UserDefaults.standard.integer(forKey: "midiRun_highscore")
     var fontSize: CGFloat!
     var scoreLabel: SKLabelNode!
     var highScore = 0
@@ -266,8 +266,10 @@ class GameScene: SKScene {
         
         pipeDown.name = "Pipe"
         pipeDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        pipeDown.scale(to: frame.size, width: true, multiplier: 0.12) //80% of the frame's width
+
         //  pipeDown.position = CGPoint(x: 7, y: 200)
-        pipeDown.position = CGPoint(x: 0.0, y: 119)
+        pipeDown.position = CGPoint(x: 0.0, y: 115)
         
         pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
         pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
@@ -381,9 +383,10 @@ class GameScene: SKScene {
         }
         
         let gameOver = SKSpriteNode(imageNamed: "gameOver")
+        gameOver.scale(to: frame.size, width: true, multiplier: 1.0) //80% of the frame's width
         gameOver.name = "Game Over"
         gameOver.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        gameOver.position = CGPoint(x: 190, y: 400)
+        gameOver.position = CGPoint(x: frame.midX, y: 400) //center
         gameOver.zPosition = 6
         self.addChild(gameOver)
         
@@ -404,23 +407,24 @@ class GameScene: SKScene {
         
         let highScoreLabel = SKLabelNode(fontNamed: "Press Start K")
         highScoreLabel.text = "Highscore: 0"
+        highScoreLabel.numberOfLines = 0
         highScoreLabel.fontSize = 18
-        highScoreLabel.position = CGPoint(x: 170.0, y: 300.0)
+        highScoreLabel.position = CGPoint(x: 190.0, y: 330.0)
         highScoreLabel.zPosition = 8
         addChild(highScoreLabel)
         
         if (score > currentHighScore) {
             
-            UserDefaults.standard.set(score, forKey: "tinyBazooka_highscore")
+            UserDefaults.standard.set(score, forKey: "midiRun_highscore")
             
             UserDefaults.standard.synchronize()
             
-            highScoreLabel.text = "New High Score: \(score) !"
+            highScoreLabel.text = "New High Score: \(score)!"
             
             
         } else {
             
-            highScoreLabel.text = "You can do better than that! \(score)"
+            highScoreLabel.text = "Not your best... \n \n Your score: \(score)"
             
         }
     }
