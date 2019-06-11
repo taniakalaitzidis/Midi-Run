@@ -225,7 +225,7 @@ class GameScene: SKScene {
         let platform = SKSpriteNode(imageNamed: platformsArray[0])
         platform.zPosition = GameConstants.ZPositions.objectZ
         platform.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        platform.scale(to: frame.size, width: false, multiplier: 0.1/2)
+        platform.scale(to: frame.size, width: false, multiplier: 0.1/1.6)
 
 
         platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: platform.size.width, height: platform.size.height))
