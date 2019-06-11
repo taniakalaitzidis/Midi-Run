@@ -20,9 +20,10 @@ class MenuScene: SKScene {
         
         highScoreLabel = SKLabelNode(fontNamed: "Press Start K")
         highScoreLabel.text = "Highscore: \(currentHighScore)"
-        highScoreLabel.fontSize = 22
+      //  highScoreLabel.fontSize = 12
         highScoreLabel.fontColor = UIColor.yellow
-        highScoreLabel.position = CGPoint(x: 170.0, y: frame.midY)
+        highScoreLabel.scale(to: frame.size, width: false, multiplier: 0.03)
+        highScoreLabel.position = CGPoint(x: frame.midX-6, y: frame.midY)
         highScoreLabel.zPosition = GameConstants.ZPositions.hudZ
         addChild(highScoreLabel)
       
@@ -38,10 +39,32 @@ class MenuScene: SKScene {
         
         let startGame =  SKSpriteNode(imageNamed: GameConstants.StringConstants.startGame)
         startGame.scale(to: frame.size, width: false, multiplier: 0.045) //0.1 for multiplier is a tenth of the height of the screen
-        startGame.position = CGPoint(x: frame.midX, y: 450.0) //center
+        startGame.position = CGPoint(x: frame.midX, y: frame.maxY*0.6) //center
         addChild(startGame)
-    
         
+        let instructions = SKLabelNode(fontNamed: "Press Start K")
+        instructions.text = "Instructions"
+        instructions.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+       // instructions.fontSize = 18
+        instructions.scale(to: frame.size, width: false, multiplier: 0.02)
+        instructions.position = CGPoint(x: self.frame.width*0.04, y: frame.maxY/3)
+        addChild(instructions)
+        
+        let musicOnOff = SKLabelNode(fontNamed: "Press Start K")
+        musicOnOff.text = "Music on"
+        musicOnOff.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        musicOnOff.scale(to: frame.size, width: false, multiplier: 0.02)
+        musicOnOff.position = CGPoint(x: self.frame.width*0.04, y: frame.maxY/4)
+        addChild(musicOnOff)
+        
+        let credits = SKLabelNode(fontNamed: "Press Start K")
+        credits.text = "Credits"
+        credits.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        credits.scale(to: frame.size, width: false, multiplier: 0.02)
+        credits.position = CGPoint(x: self.frame.width*0.04, y: frame.maxY/6)
+        addChild(credits)
+
+
         
     }
 

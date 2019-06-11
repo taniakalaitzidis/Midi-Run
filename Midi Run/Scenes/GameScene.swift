@@ -72,8 +72,10 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         scoreLabel = SKLabelNode(fontNamed: "Press Start K")
         scoreLabel.text = "Score: 0"
-        scoreLabel.fontSize = 16
-        scoreLabel.position = CGPoint(x: 100.0, y: 640.0)
+      //  scoreLabel.fontSize = 16
+        scoreLabel.scale(to: frame.size, width: false, multiplier: 0.02)
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        scoreLabel.position = CGPoint(x: self.frame.width*0.1, y: frame.maxY - scoreLabel.frame.size.height/0.5)
         scoreLabel.zPosition = GameConstants.ZPositions.hudZ
         addChild(scoreLabel)
         
@@ -137,8 +139,8 @@ class GameScene: SKScene {
         for i in 0...1 {
             let backgroundGroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.groundNodeName)
             backgroundGroundImage.name = String(i)
-            backgroundGroundImage.scale(to: frame.size, width: false, multiplier: 1.0)
-            backgroundGroundImage.size = CGSize(width: 1237, height: 94)
+            backgroundGroundImage.scale(to: frame.size, width: false, multiplier: 0.13)
+            //backgroundGroundImage.size = CGSize(width: 1237, height: 94)
             backgroundGroundImage.anchorPoint = CGPoint.zero
             backgroundGroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundGroundImage.size.width, y: 0.0)
             backgroundGroundImage.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: backgroundGroundImage.size.width , height: backgroundGroundImage.size.height * 2.0))
@@ -154,7 +156,7 @@ class GameScene: SKScene {
             backgroundSunsetImage.name = String(i)
             backgroundSunsetImage.scale(to: frame.size, width: false, multiplier: 0.85)
             backgroundSunsetImage.anchorPoint = CGPoint.zero
-            backgroundSunsetImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundSunsetImage.size.width, y: 100.0)
+            backgroundSunsetImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundSunsetImage.size.width, y: frame.maxY*0.15)
             backgroundSunset.addChild(backgroundSunsetImage)
         }
         
@@ -163,7 +165,7 @@ class GameScene: SKScene {
         //change speed of background here
         backgroundLayer.layerVelocity = CGPoint(x: -10.0, y: 0.0)
         //backgroundClouds.layerVelocity = CGPoint(x: -30, y: 0.0)
-        backgroundGround.layerVelocity = CGPoint(x: -180.0, y: 0.0)
+        backgroundGround.layerVelocity = CGPoint(x: -200.0, y: 0.0)
         backgroundSunset.layerVelocity = CGPoint(x: -10.0, y: 0.0)
 
         
@@ -221,12 +223,10 @@ class GameScene: SKScene {
         
         platformsArray = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: platformsArray) as! [String]
         let platform = SKSpriteNode(imageNamed: platformsArray[0])
-//        let randomPlatformPosition = GKRandomDistribution(lowestValue: 700, highestValue: 900)
-//        let position = CGFloat(randomPlatformPosition.nextInt())
         platform.zPosition = GameConstants.ZPositions.objectZ
         platform.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    //    platform.position = CGPoint(x: 0.0, y: 300)
-       // platform.position.x = self.frame.width + 100
+        platform.scale(to: frame.size, width: false, multiplier: 0.1/2)
+
 
         platform.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: platform.size.width, height: platform.size.height))
         platform.physicsBody!.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
@@ -245,7 +245,7 @@ class GameScene: SKScene {
         // Add the monster to the scene
         
         // Determine speed of the monster
-       let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+       let actualDuration = random(min: CGFloat(3.0), max: CGFloat(4.0))
         
         
         
@@ -269,7 +269,7 @@ class GameScene: SKScene {
         pipeDown.scale(to: frame.size, width: true, multiplier: 0.12) //80% of the frame's width
 
         //  pipeDown.position = CGPoint(x: 7, y: 200)
-        pipeDown.position = CGPoint(x: 0.0, y: 115)
+      //  pipeDown.position = CGPoint(x: 0.0, y: 115)
         
         pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
         pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
@@ -278,6 +278,7 @@ class GameScene: SKScene {
         
         pipesHolder.zPosition = 5
         pipesHolder.position.x = self.frame.width + 100
+        pipesHolder.position.y = self.frame.width - 269
      
         pipesHolder.addChild(pipeDown)
         self.addChild(pipesHolder)
@@ -386,30 +387,33 @@ class GameScene: SKScene {
         gameOver.scale(to: frame.size, width: true, multiplier: 1.0) //80% of the frame's width
         gameOver.name = "Game Over"
         gameOver.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        gameOver.position = CGPoint(x: frame.midX, y: 400) //center
+        gameOver.position = CGPoint(x: frame.midX, y: frame.midY) //center
         gameOver.zPosition = 6
         self.addChild(gameOver)
         
         let restart = SKSpriteNode(imageNamed: "restart")
         restart.name = "Restart"
         restart.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        restart.position = CGPoint(x: 100, y: 270)
+        restart.position = CGPoint(x: self.frame.width*0.25, y: frame.maxY/3.3)
         restart.zPosition = 7
         self.addChild(restart)
         
         let quit = SKSpriteNode(imageNamed: "quit")
         quit.name = "Quit"
         quit.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        quit.position = CGPoint(x: 300, y: 270)
+        quit.position = CGPoint(x: self.frame.width*0.83, y: frame.maxY/3.3)
         quit.zPosition = 7
         self.addChild(quit)
         
         
         let highScoreLabel = SKLabelNode(fontNamed: "Press Start K")
         highScoreLabel.text = "Highscore: 0"
+        highScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+        highScoreLabel.scale(to: frame.size, width: false, multiplier: 0.05)
+        highScoreLabel.fontColor = UIColor.yellow
         highScoreLabel.numberOfLines = 0
-        highScoreLabel.fontSize = 18
-        highScoreLabel.position = CGPoint(x: 190.0, y: 330.0)
+        highScoreLabel.fontSize = 22
+        highScoreLabel.position = CGPoint(x: frame.midX, y: frame.maxY/2.4)
         highScoreLabel.zPosition = 8
         addChild(highScoreLabel)
         
@@ -419,12 +423,12 @@ class GameScene: SKScene {
             
             UserDefaults.standard.synchronize()
             
-            highScoreLabel.text = "New High Score: \(score)!"
+            highScoreLabel.text = "New High Score!\n\n\(score)"
             
             
         } else {
             
-            highScoreLabel.text = "Not your best... \n \n Your score: \(score)"
+            highScoreLabel.text = "Your score: \(score)"
             
         }
     }
