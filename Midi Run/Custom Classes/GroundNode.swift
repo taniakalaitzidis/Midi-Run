@@ -30,6 +30,7 @@ class GroundNode: SKSpriteNode {
         
         physicsBody = isBodyActivated ? activatedBody : nil
         name = GameConstants.StringConstants.groundNodeName
+        name = GameConstants.StringConstants.topBorderName
     }
     
     required init?(coder aDecoder: NSCoder) {

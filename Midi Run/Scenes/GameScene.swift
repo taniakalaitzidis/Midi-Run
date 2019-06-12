@@ -20,11 +20,13 @@ class GameScene: SKScene {
     //var backgroundClouds: RepeatingLayer!
     var backgroundGround: RepeatingLayer!
     var backgroundSunset: RepeatingLayer!
+    var topBorderLayer: RepeatingLayer!
     
     var platformsArray = ["platform12", "platform13", "platform14", "platform15"]
     
     var isGamePaused = false
     
+    var enemyBorder: SKSpriteNode!
     var highScoreLabel: SKLabelNode!
     var currentHighScore = UserDefaults.standard.integer(forKey: "midiRun_highscore")
     var fontSize: CGFloat!
@@ -38,8 +40,6 @@ class GameScene: SKScene {
     }
     
     var pipesHolder: SKSpriteNode!
-    //var platformHolder: SKSpriteNode!
-
     var platformTimer: Timer!
     var mapNode: SKNode!
     var tileMap: SKTileMapNode!
@@ -79,6 +79,17 @@ class GameScene: SKScene {
         scoreLabel.zPosition = GameConstants.ZPositions.hudZ
         addChild(scoreLabel)
         
+        enemyBorder = SKSpriteNode(imageNamed: GameConstants.StringConstants.enemyBorderName)
+        enemyBorder.scale(to: frame.size, width: false, multiplier: 2)
+        enemyBorder.position = CGPoint(x: 0.0, y: frame.maxY - enemyBorder.frame.size.height / 2.0)
+        enemyBorder.zPosition = GameConstants.ZPositions.hudZ
+        enemyBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: enemyBorder.size.width, height: enemyBorder.size.height))
+        enemyBorder.physicsBody?.affectedByGravity = false
+        enemyBorder.physicsBody?.isDynamic = false
+        enemyBorder.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
+        addChild(enemyBorder)
+
+        
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -6.0)
         // the physicsWorld.gravity is where you can change how fast or slow the player falls in the game
@@ -88,8 +99,6 @@ class GameScene: SKScene {
         physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
         
         createLayers()
-        
-        
     }
     
     
@@ -113,6 +122,10 @@ class GameScene: SKScene {
         backgroundGround.zPosition = GameConstants.ZPositions.closeBGZ
         addChild(backgroundGround)
         
+        topBorderLayer = RepeatingLayer()
+        topBorderLayer.zPosition = GameConstants.ZPositions.hudZ
+        addChild(topBorderLayer)
+        
 
         // the for in 0...1 means it will run twice; repeating effect
         for i in 0...1 {
@@ -124,26 +137,14 @@ class GameScene: SKScene {
             backgroundLayer.addChild(backgroundImage)
         }
         
-//        for i in 0...1 {
-//            let backgroundCloudsImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.worldBackgroundNames[1])
-//            backgroundCloudsImage.name = String(i)
-//            backgroundCloudsImage.scale(to: frame.size, width: false, multiplier: 1.0/4)
-//
-//           // backgroundCloudsImage.size = CGSize(width: 1251, height: 130)
-//            backgroundCloudsImage.anchorPoint = CGPoint.zero
-//            backgroundCloudsImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundCloudsImage.size.width, y: 480.0)
-//            backgroundClouds.addChild(backgroundCloudsImage)
-//
-//        }
         
         for i in 0...1 {
             let backgroundGroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.groundNodeName)
             backgroundGroundImage.name = String(i)
             backgroundGroundImage.scale(to: frame.size, width: false, multiplier: 0.13)
-            //backgroundGroundImage.size = CGSize(width: 1237, height: 94)
             backgroundGroundImage.anchorPoint = CGPoint.zero
             backgroundGroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * backgroundGroundImage.size.width, y: 0.0)
-            backgroundGroundImage.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: backgroundGroundImage.size.width , height: backgroundGroundImage.size.height * 2.0))
+            backgroundGroundImage.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: backgroundGroundImage.size.width, height: backgroundGroundImage.size.height * 2.0))
             backgroundGroundImage.physicsBody?.affectedByGravity = false
             backgroundGroundImage.physicsBody?.isDynamic = false
             backgroundGroundImage.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
@@ -160,14 +161,26 @@ class GameScene: SKScene {
             backgroundSunset.addChild(backgroundSunsetImage)
         }
         
-        
+        for i in 0...1 {
+            let topBorder = SKSpriteNode(imageNamed: GameConstants.StringConstants.topBorderName)
+            topBorder.alpha = 0.0
+            topBorder.name = String(i)
+            topBorder.scale(to: frame.size, width: false, multiplier: 0.13)
+            topBorder.anchorPoint = CGPoint.zero
+            topBorder.position = CGPoint(x: 0.0 + CGFloat(i) * topBorder.size.width, y: frame.maxY)
+            topBorder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: topBorder.size.width, height: topBorder.size.height))
+            topBorder.physicsBody?.affectedByGravity = false
+            topBorder.physicsBody?.isDynamic = false
+            topBorder.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.groundCategory
+            topBorderLayer.addChild(topBorder)
+            
+        }
         
         //change speed of background here
         backgroundLayer.layerVelocity = CGPoint(x: -10.0, y: 0.0)
-        //backgroundClouds.layerVelocity = CGPoint(x: -30, y: 0.0)
         backgroundGround.layerVelocity = CGPoint(x: -200.0, y: 0.0)
         backgroundSunset.layerVelocity = CGPoint(x: -10.0, y: 0.0)
-
+        topBorderLayer.layerVelocity = CGPoint(x: -200.0, y: 0.0)
         
         load(level: "Level_0-1")
     }
@@ -179,7 +192,6 @@ class GameScene: SKScene {
             loadTileMap()
         }
     }
-    
     
     
     func loadTileMap() {
@@ -247,8 +259,6 @@ class GameScene: SKScene {
         // Determine speed of the monster
        let actualDuration = random(min: CGFloat(3.0), max: CGFloat(4.0))
         
-        
-        
         // Create the actions
         let actionMove = SKAction.move(to: CGPoint(x: -platform.size.width, y: actualY), duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
@@ -268,7 +278,7 @@ class GameScene: SKScene {
         pipeDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         pipeDown.scale(to: frame.size, width: true, multiplier: 0.12) //80% of the frame's width
 
-        //  pipeDown.position = CGPoint(x: 7, y: 200)
+        //pipeDown.position = CGPoint(x: 7, y: 200)
       //  pipeDown.position = CGPoint(x: 0.0, y: 115)
         
         pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
@@ -302,6 +312,7 @@ class GameScene: SKScene {
         self.run(SKAction.repeatForever(sequence), withKey: "Spawn")
        
     }
+    
     
     func addPlayer() {
         player = Player(imageNamed: GameConstants.StringConstants.playerImageName)
@@ -468,13 +479,13 @@ class GameScene: SKScene {
                     scene.scaleMode = .aspectFill
                     
                     view.presentScene(scene)
-                    
+//
                     view.ignoresSiblingOrder = true
-                    
+
                     view.showsFPS = true
-                    
+
                     view.showsNodeCount = true
-                    
+
                     view.showsPhysics = true
                     
                 }
@@ -522,6 +533,7 @@ class GameScene: SKScene {
            // backgroundClouds.update(dt)
             backgroundGround.update(dt)
             backgroundSunset.update(dt)
+            topBorderLayer.update(dt)
             if counter >= 10 {
                 score += 1
                 counter = 0

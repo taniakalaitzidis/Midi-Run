@@ -42,6 +42,8 @@ struct GameConstants {
         static let playerImageName = "idle0"
         static let groundNodeName = "ground"
         static let enemyName = "enemy1"
+        static let topBorderName = "topBorder"
+        static let enemyBorderName = "enemyBorder"
         
         static let playerIdleAtlas = "Player Idle Atlas"
         static let playerRunAtlas = "Player Run Atlas"
