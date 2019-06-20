@@ -17,7 +17,6 @@ class GameScene: SKScene {
     
     var worldLayer: Layer!
     var backgroundLayer: RepeatingLayer!
-    //var backgroundClouds: RepeatingLayer!
     var backgroundGround: RepeatingLayer!
     var backgroundSunset: RepeatingLayer!
     var topBorderLayer: RepeatingLayer!
@@ -36,6 +35,14 @@ class GameScene: SKScene {
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
+            
+            if score % 50 == 0 {
+                backgroundLayer.layerVelocity = CGPoint(x: -30.0, y: 0.0)
+                backgroundGround.layerVelocity = CGPoint(x: -300.0, y: 0.0)
+                backgroundSunset.layerVelocity = CGPoint(x: -30.0, y: 0.0)
+                topBorderLayer.layerVelocity = CGPoint(x: -300.0, y: 0.0)
+            }
+            
         }
     }
     
@@ -88,7 +95,7 @@ class GameScene: SKScene {
         enemyBorder.physicsBody?.isDynamic = false
         enemyBorder.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
         addChild(enemyBorder)
-
+ 
         
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -6.0)
@@ -277,9 +284,6 @@ class GameScene: SKScene {
         pipeDown.name = "Pipe"
         pipeDown.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         pipeDown.scale(to: frame.size, width: true, multiplier: 0.12) //80% of the frame's width
-
-        //pipeDown.position = CGPoint(x: 7, y: 200)
-      //  pipeDown.position = CGPoint(x: 0.0, y: 115)
         
         pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
         pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
@@ -530,7 +534,6 @@ class GameScene: SKScene {
         if gameState == .ongoing {
             worldLayer.update(dt)
             backgroundLayer.update(dt)
-           // backgroundClouds.update(dt)
             backgroundGround.update(dt)
             backgroundSunset.update(dt)
             topBorderLayer.update(dt)
@@ -541,11 +544,11 @@ class GameScene: SKScene {
                 counter += 1
             }
             
+            
             if score > highScore {
                 highScore = score
             }
             
-        
             if player.physicsBody?.velocity.dy == 0 {
                 ableToJump = true
             }

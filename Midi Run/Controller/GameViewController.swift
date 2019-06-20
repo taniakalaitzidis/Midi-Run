@@ -30,14 +30,14 @@ class GameViewController: UIViewController {
             
            // below is debugging information = efficiency of code thats written
             
-//            view.showsFPS = true
-//            //shows frames per seconds
-//
-//            view.showsNodeCount = true
-//            // shows amount of nodes
-//
-//            view.showsPhysics = true
-//            //shows the blue lines around any physics
+            view.showsFPS = true
+            //shows frames per seconds
+
+            view.showsNodeCount = true
+            // shows amount of nodes
+
+            view.showsPhysics = true
+            //shows the blue lines around any physics
          
         }
   

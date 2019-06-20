@@ -4,6 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>EXEPixelPerfect.ttf</string>
 		<string>prstartk.ttf</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
