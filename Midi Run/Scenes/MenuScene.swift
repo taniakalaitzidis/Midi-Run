@@ -15,6 +15,8 @@ class MenuScene: SKScene {
     var highscoreBorderTopLayer: RepeatingLayer!
     var fontSize: CGFloat!
     
+    var bgMusic: SKAudioNode!
+    
     var lastTime: TimeInterval = 0
     var dt: TimeInterval = 0
 
@@ -23,6 +25,10 @@ class MenuScene: SKScene {
         layoutView()
         highscoreBorders()
 
+        if let musicURL = Bundle.main.url(forResource: "8Bit Title Screen", withExtension: "mp3") {
+            bgMusic = SKAudioNode(url: musicURL)
+            addChild(bgMusic)
+        }
         
         highScoreLabel = SKLabelNode(fontNamed: "Press Start K")
         highScoreLabel.text = "Highscore: \(currentHighScore)"
@@ -47,11 +53,8 @@ class MenuScene: SKScene {
             highscoreBorderBottom.name = String(i)
             highscoreBorderBottom.scale(to: frame.size, width: true, multiplier: 1)
             highscoreBorderBottom.anchorPoint = CGPoint.zero
-           // background.position = CGPoint(x: (backgroundTexture.size().width * CGFloat(i)) - CGFloat(1 * i), y: 100)
-
-            highscoreBorderBottom.position = CGPoint(x: 0.0 + CGFloat(i) * highscoreBorderBottom.size.width, y: frame.maxY/7)
+            highscoreBorderBottom.position = CGPoint(x: 0.0 + CGFloat(i) * highscoreBorderBottom.size.width, y: 0.0)
             addChild(highscoreBorderBottom)
-
             
             let moveLeft = SKAction.moveBy(x: -highscoreBorderBottom.size.width, y: 0, duration: 2)
             let moveReset = SKAction.moveBy(x: highscoreBorderBottom.size.width, y: 0, duration: 0)
@@ -62,11 +65,21 @@ class MenuScene: SKScene {
             
         }
         
-
-//        let highscoreBorderBottom = SKSpriteNode(imageNamed: "highscoreBorderBottom")
-//        highscoreBorderBottom.scale(to: frame.size, width: true, multiplier: 1)
-//        highscoreBorderBottom.position = CGPoint(x: frame.midX, y: frame.maxY/5.3)
-//        addChild(highscoreBorderBottom)
+        for i in 0...1 {
+            let highscoreBorderTop = SKSpriteNode(imageNamed: "highscoreBorderTop")
+            highscoreBorderTop.name = String(i)
+            highscoreBorderTop.scale(to: frame.size, width: true, multiplier: 1)
+            highscoreBorderTop.anchorPoint = CGPoint.zero
+            highscoreBorderTop.position = CGPoint(x: 0.0 + CGFloat(i) * highscoreBorderTop.size.width, y: frame.maxY - frame.height*0.05)
+            addChild(highscoreBorderTop)
+            
+            let moveRight = SKAction.moveBy(x: -highscoreBorderTop.size.width, y: 0, duration: 2)
+            let moveReset = SKAction.moveBy(x: highscoreBorderTop.size.width, y: 0, duration: 0)
+            let moveLoop = SKAction.sequence([moveRight, moveReset])
+            let moveForever = SKAction.repeatForever(moveLoop)
+            
+            highscoreBorderTop.run(moveForever)
+        }
         
     }
     
@@ -83,9 +96,15 @@ class MenuScene: SKScene {
         gameLogo.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(gameLogo)
         
+        let devName = SKSpriteNode(imageNamed: "lapisphere-0")
+        devName.scale(to: frame.size, width: true, multiplier: 0.33) //80% of the frame's width
+        devName.position = CGPoint(x: self.frame.width*0.75, y: frame.maxY/2.5)
+        addChild(devName)
+        
+        
         let startGame =  SKSpriteNode(imageNamed: GameConstants.StringConstants.startGame)
         startGame.scale(to: frame.size, width: false, multiplier: 0.045) //0.1 for multiplier is a tenth of the height of the screen
-        startGame.position = CGPoint(x: frame.midX, y: frame.maxY*0.7) //center
+        startGame.position = CGPoint(x: frame.midX, y: frame.maxY*0.68)
         addChild(startGame)
         
 //        let glowBox = SKSpriteNode(imageNamed: "glowBoxHighScore")
@@ -96,19 +115,21 @@ class MenuScene: SKScene {
 
         let musicOnOff = SKSpriteNode(imageNamed: "musicOnOff")
         musicOnOff.scale(to: frame.size, width: false, multiplier: 0.07)
-        musicOnOff.position = CGPoint(x: self.frame.width*0.15, y: frame.maxY*0.9)
+        musicOnOff.position = CGPoint(x: self.frame.width*0.15, y: frame.maxY - frame.height*0.15)
         addChild(musicOnOff)
         
         let instructions = SKSpriteNode(imageNamed: "instructions")
         instructions.name = "Instructions"
         instructions.scale(to: frame.size, width: false, multiplier: 0.07)
-        instructions.position = CGPoint(x: frame.midX, y: frame.maxY*0.9)
+        instructions.position = CGPoint(x: frame.midX, y: frame.maxY - frame.height*0.15)
         addChild(instructions)
         
         let credits = SKSpriteNode(imageNamed: "credits")
         credits.scale(to: frame.size, width: false, multiplier: 0.07)
-        credits.position = CGPoint(x: self.frame.width*0.85, y: frame.maxY*0.9)
+        credits.position = CGPoint(x: self.frame.width*0.85, y: frame.maxY - frame.height*0.15)
         addChild(credits)
+        
+        
         
        // highscoreBorders()
         

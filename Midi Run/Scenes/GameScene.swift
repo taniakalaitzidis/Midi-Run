@@ -21,6 +21,8 @@ class GameScene: SKScene {
     var backgroundSunset: RepeatingLayer!
     var topBorderLayer: RepeatingLayer!
     
+    var bgMusic: SKAudioNode!
+    
     var platformsArray = ["platform12", "platform13", "platform14", "platform15"]
     
     var isGamePaused = false
@@ -37,6 +39,8 @@ class GameScene: SKScene {
             scoreLabel.text = "Score: \(score)"
             
             if score % 50 == 0 {
+
+                bgMusic.run(SKAction.changePlaybackRate(to: 1.5, duration: 0))
                 backgroundLayer.layerVelocity = CGPoint(x: -30.0, y: 0.0)
                 backgroundGround.layerVelocity = CGPoint(x: -300.0, y: 0.0)
                 backgroundSunset.layerVelocity = CGPoint(x: -30.0, y: 0.0)
@@ -77,6 +81,14 @@ class GameScene: SKScene {
    // var brake = false
 
     override func didMove(to view: SKView) {
+        
+        if let musicURL = Bundle.main.url(forResource: "Fight in the Dungeon", withExtension: "mp3") {
+            bgMusic = SKAudioNode(url: musicURL)
+            addChild(bgMusic)
+            
+            
+        }
+        
         scoreLabel = SKLabelNode(fontNamed: "Press Start K")
         scoreLabel.text = "Score: 0"
       //  scoreLabel.fontSize = 16
@@ -108,6 +120,7 @@ class GameScene: SKScene {
         createLayers()
     }
     
+ 
     
     func createLayers() {
         worldLayer = Layer()
@@ -336,17 +349,17 @@ class GameScene: SKScene {
     func addPlayerActions() {
         
         let up = SKAction.moveBy(x: 0.0, y: frame.size.height/4, duration: 0.4)
-        //again, you can change the duration of the jump
+        //you can change the duration of the jump
         up.timingMode = .easeOut
         //this means the action will slow down at the end for a more "realistic" jumping look
         
         player.createUserData(entry: up, forKey: GameConstants.StringConstants.jumpUpActionKey)
         
-     //   let move = SKAction.moveBy(x: 0.0, y: player.size.height/4, duration: 0.4)
-      //  let jump = SKAction.animate(with: player.jumpFrames, timePerFrame: 0.4/Double(player.jumpFrames.count))
-       // let group = SKAction.group([move,jump])
+            let move = SKAction.moveBy(x: 0.0, y: player.size.height, duration: 0.4)
+            let jump = SKAction.animate(with: player.jumpFrames, timePerFrame: 0.4/Double(player.jumpFrames.count))
+            let group = SKAction.group([move,jump])
         
-       // player.createUserData(entry: group, forKey: GameConstants.StringConstants.brakeDescendActionKey)
+            player.createUserData(entry: group, forKey: GameConstants.StringConstants.brakeDescendActionKey)
 
     }
     
@@ -494,6 +507,8 @@ class GameScene: SKScene {
                     
                 }
             }
+            
+            
             
             if atPoint(location).name == "Quit" {
                 //copied from GameViewController but calling MenuScene.swift; when quitting the game, it will take you to the menu

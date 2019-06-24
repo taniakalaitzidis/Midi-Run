@@ -30,6 +30,12 @@
 		6AB0E24621D54F74009C0B30 /* PhysicsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB0E24521D54F74009C0B30 /* PhysicsHelper.swift */; };
 		6AB0E24821D55874009C0B30 /* GroundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB0E24721D55874009C0B30 /* GroundNode.swift */; };
 		6AB0E24A21D55CBE009C0B30 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB0E24921D55CBE009C0B30 /* AnimationHelper.swift */; };
+		6AC3087322C1217900F6FFF2 /* Fight in the Dungeon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087222C1217900F6FFF2 /* Fight in the Dungeon.mp3 */; };
+		6AC3087422C1217900F6FFF2 /* Fight in the Dungeon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087222C1217900F6FFF2 /* Fight in the Dungeon.mp3 */; };
+		6AC3087522C1217900F6FFF2 /* Fight in the Dungeon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087222C1217900F6FFF2 /* Fight in the Dungeon.mp3 */; };
+		6AC3087722C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */; };
+		6AC3087822C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */; };
+		6AC3087922C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */; };
 		6AE06ADE22661335002107AC /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE06ADD22661335002107AC /* Random.swift */; };
 		6AFDEB2A21DFE625007BEBFE /* ObjectHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFDEB2921DFE625007BEBFE /* ObjectHelper.swift */; };
 /* End PBXBuildFile section */
@@ -81,6 +87,8 @@
 		6AB0E24521D54F74009C0B30 /* PhysicsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsHelper.swift; sourceTree = "<group>"; };
 		6AB0E24721D55874009C0B30 /* GroundNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundNode.swift; sourceTree = "<group>"; };
 		6AB0E24921D55CBE009C0B30 /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
+		6AC3087222C1217900F6FFF2 /* Fight in the Dungeon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Fight in the Dungeon.mp3"; path = "../../../songs for game/Fight in the Dungeon.mp3"; sourceTree = "<group>"; };
+		6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "8Bit Title Screen.mp3"; path = "../../../songs for game/8Bit Title Screen.mp3"; sourceTree = "<group>"; };
 		6AE06ADD22661335002107AC /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		6AFDEB2921DFE625007BEBFE /* ObjectHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -144,6 +152,7 @@
 		6A3B247B21D41CA100474B87 /* Midi Run */ = {
 			isa = PBXGroup;
 			children = (
+				6AC3087122C1216700F6FFF2 /* Music */,
 				6AB0E24421D54F64009C0B30 /* Helper Files */,
 				6AB0E24121D547E1009C0B30 /* Custom Classes */,
 				6A3B24BD21D42AF600474B87 /* Extensions */,
@@ -275,6 +284,15 @@
 			path = "Helper Files";
 			sourceTree = "<group>";
 		};
+		6AC3087122C1216700F6FFF2 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */,
+				6AC3087222C1217900F6FFF2 /* Fight in the Dungeon.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -381,6 +399,8 @@
 			files = (
 				6A3B24BC21D4249200474B87 /* TileSets.sks in Resources */,
 				6A3B248821D41CA100474B87 /* Main.storyboard in Resources */,
+				6AC3087722C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */,
+				6AC3087322C1217900F6FFF2 /* Fight in the Dungeon.mp3 in Resources */,
 				6A3B24B521D421D300474B87 /* Default-568h@2x.png in Resources */,
 				6A321EFB223FC9F1006000E6 /* Assets.xcassets in Resources */,
 				6A11D08222B94D5D0080F1C4 /* EXEPixelPerfect.ttf in Resources */,
@@ -394,6 +414,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AC3087822C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */,
+				6AC3087422C1217900F6FFF2 /* Fight in the Dungeon.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +423,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AC3087922C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */,
+				6AC3087522C1217900F6FFF2 /* Fight in the Dungeon.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
