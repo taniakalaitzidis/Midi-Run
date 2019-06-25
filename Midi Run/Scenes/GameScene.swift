@@ -50,6 +50,8 @@ class GameScene: SKScene {
         }
     }
     
+   
+    var coinHolder: SKSpriteNode!
     var pipesHolder: SKSpriteNode!
     var platformTimer: Timer!
     var mapNode: SKNode!
@@ -118,6 +120,7 @@ class GameScene: SKScene {
         physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
         
         createLayers()
+        addCoin()
     }
     
  
@@ -249,6 +252,11 @@ class GameScene: SKScene {
         return random() * (max - min) + min
     }
 
+    
+    
+    
+
+    
     func createPlatform() {
         // Needs major editing. I need the platforms to appear at three or four specific positions at random time intervals SEPERATELY. not at the same time.
         // I believe it has to do with the two lines let randomPlatformPosition and let position.
@@ -287,7 +295,28 @@ class GameScene: SKScene {
         
     }
     
+
+
     
+    func addCoin() {
+        
+        coinHolder = SKSpriteNode()
+        let coin = SKSpriteNode(imageNamed: GameConstants.StringConstants.coinImageName)
+        coin.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        coin.scale(to: frame.size, width: true, multiplier: 0.2) //80% of the frame's width
+        let coinFrames = AnimationHelper.loadTextures(from: SKTextureAtlas(named: GameConstants.StringConstants.coinRotateAtlas), withName: GameConstants.StringConstants.coinPrefixKey)
+        coin.run(SKAction.repeatForever(SKAction.animate(with: coinFrames, timePerFrame: 0.1)))
+        coin.zPosition = 5
+        coin.position = CGPoint(x: frame.midX, y: frame.midY)
+        
+        let moveUp = SKAction.moveBy(x: 0, y: 50, duration: 1)
+        let sequence = SKAction.sequence([moveUp, moveUp.reversed()])
+        
+        coin.run(SKAction.repeatForever(sequence), withKey:  "moving")
+        addChild(coin)
+
+    }
+
     func createPipes() {
         pipesHolder = SKSpriteNode()
         pipesHolder!.name = "Holder"
@@ -330,6 +359,7 @@ class GameScene: SKScene {
        
     }
     
+   
     
     func addPlayer() {
         player = Player(imageNamed: GameConstants.StringConstants.playerImageName)

@@ -42,9 +42,11 @@ struct GameConstants {
         static let playerImageName = "idle0"
         static let groundNodeName = "ground"
         static let enemyName = "enemy1"
+        static let coinName = "Coin"
         static let topBorderName = "topBorder"
         static let enemyBorderName = "enemyBorder"
-        
+        static let coinImageName = "coin-0"
+
         static let playerIdleAtlas = "Player Idle Atlas"
         static let playerRunAtlas = "Player Run Atlas"
         static let playerJumpAtlas = "Player Jump Atlas"
@@ -53,6 +55,8 @@ struct GameConstants {
         static let runPrefixKey = "run_"
         static let jumpPrefixKey = "jump"
         static let diePrefixKey = "die_"
+        static let coinRotateAtlas = "Coin Rotate Atlas"
+        static let coinPrefixKey = "coin-"
         
         static let jumpUpActionKey = "JumpUp"
         static let brakeDescendActionKey = "BrakeDescend"
