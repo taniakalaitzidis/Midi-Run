@@ -25,6 +25,8 @@ class GameScene: SKScene {
     
     var platformsArray = ["platform12", "platform13", "platform14", "platform15"]
     
+    var coins = 0
+    
     var isGamePaused = false
     
     var enemyBorder: SKSpriteNode!
@@ -38,9 +40,9 @@ class GameScene: SKScene {
         didSet {
             scoreLabel.text = "Score: \(score)"
             
-            if score % 50 == 0 {
+            if score % 100 == 0 {
 
-                bgMusic.run(SKAction.changePlaybackRate(to: 1.5, duration: 0))
+                bgMusic.run(SKAction.changePlaybackRate(to: 1.2, duration: 0))
                 backgroundLayer.layerVelocity = CGPoint(x: -30.0, y: 0.0)
                 backgroundGround.layerVelocity = CGPoint(x: -300.0, y: 0.0)
                 backgroundSunset.layerVelocity = CGPoint(x: -30.0, y: 0.0)
@@ -120,7 +122,7 @@ class GameScene: SKScene {
         physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
         
         createLayers()
-        addCoin()
+       // addCoin()
     }
     
  
@@ -239,6 +241,7 @@ class GameScene: SKScene {
         // I changed repeats from true to false and that caused a lot less nodes to appear....
         platformTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (timer) in
             self.createPlatform()
+            self.addCoin()
         })
     }
 //
@@ -252,11 +255,6 @@ class GameScene: SKScene {
         return random() * (max - min) + min
     }
 
-    
-    
-    
-
-    
     func createPlatform() {
         // Needs major editing. I need the platforms to appear at three or four specific positions at random time intervals SEPERATELY. not at the same time.
         // I believe it has to do with the two lines let randomPlatformPosition and let position.
@@ -296,8 +294,6 @@ class GameScene: SKScene {
     }
     
 
-
-    
     func addCoin() {
         
         coinHolder = SKSpriteNode()
@@ -309,11 +305,33 @@ class GameScene: SKScene {
         coin.zPosition = 5
         coin.position = CGPoint(x: frame.midX, y: frame.midY)
         
+        coin.physicsBody = SKPhysicsBody(circleOfRadius: coin.size.width/4)
+        coin.physicsBody!.categoryBitMask = GameConstants.PhysicsCategories.collectibleCategory
+        coin.physicsBody?.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
+        coin.physicsBody?.collisionBitMask = 0
+
+        coin.physicsBody!.affectedByGravity = false
+        coin.physicsBody!.isDynamic = false
+
+
+        
         let moveUp = SKAction.moveBy(x: 0, y: 50, duration: 1)
         let sequence = SKAction.sequence([moveUp, moveUp.reversed()])
         
         coin.run(SKAction.repeatForever(sequence), withKey:  "moving")
         addChild(coin)
+        
+        let actualY = random(min: 200, max: 400)
+        
+        coin.position = CGPoint(x: size.width + coin.size.width/2, y: actualY)
+        
+        let actualDuration = random(min: CGFloat(3.0), max: CGFloat(4.0))
+        
+        let actionMove = SKAction.move(to: CGPoint(x: -coin.size.width, y: actualY), duration: TimeInterval(actualDuration))
+        let actionMoveDone = SKAction.removeFromParent()
+        
+        coin.run(SKAction.sequence([actionMove, actionMoveDone]))
+        
 
     }
 
@@ -329,7 +347,7 @@ class GameScene: SKScene {
         
         pipeDown.physicsBody = SKPhysicsBody(rectangleOf: pipeDown.size)
         pipeDown.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
-        pipeDown.physicsBody?.affectedByGravity = false
+        pipeDown.physicsBody?.affectedByGravity = true
         pipeDown.physicsBody?.isDynamic = false
         
         pipesHolder.zPosition = 5
@@ -414,6 +432,22 @@ class GameScene: SKScene {
     
     func handleEnemyContact() {
         die(reason: 0)
+    }
+    
+    func handleCollectible(sprite: SKSpriteNode) {
+        switch sprite.name! {
+        case GameConstants.StringConstants.coinName:
+            collectCoin(sprite: sprite)
+        default:
+            break
+        }
+    }
+    
+    func collectCoin(sprite: SKSpriteNode) {
+        if GameConstants.StringConstants.coinName.contains(sprite.name!) {
+            score += 100
+        }
+        
     }
     
     func die(reason: Int) {
@@ -502,6 +536,8 @@ class GameScene: SKScene {
             if !player.airborne {
                 jump()
                 startTimers()
+                addCoin()
+
             }
             
          //   } else if !brake {
@@ -629,6 +665,16 @@ extension GameScene: SKPhysicsContactDelegate {
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.frameCategory:
             physicsBody = nil
             die(reason: 1)
+        case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.collectibleCategory:
+            if contact.bodyA.categoryBitMask == GameConstants.PhysicsCategories.collectibleCategory {
+                contact.bodyA.node?.removeFromParent()
+                score += 50
+            }
+            if contact.bodyB.categoryBitMask == GameConstants.PhysicsCategories.collectibleCategory {
+                contact.bodyB.node?.removeFromParent()
+                score += 50
+                scoreLabel?.text = "Score: \(score)"
+            }
         default:
             break
         }
