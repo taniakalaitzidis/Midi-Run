@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6A0C08D32284687A00CF4290 /* prstartk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A0C08D22284677C00CF4290 /* prstartk.ttf */; };
+		6A0CFCFC22C4111E00322C9B /* coin7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A0CFCFB22C4111E00322C9B /* coin7.wav */; };
 		6A11D08222B94D5D0080F1C4 /* EXEPixelPerfect.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A11D08122B94D5C0080F1C4 /* EXEPixelPerfect.ttf */; };
 		6A11D08422B96E3B0080F1C4 /* Instructions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A11D08322B96E3B0080F1C4 /* Instructions.swift */; };
 		6A321EFB223FC9F1006000E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A321EFA223FC9F1006000E6 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 		6AC3087722C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */; };
 		6AC3087822C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */; };
 		6AC3087922C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */; };
+		6AE022B722C4081C004AA8F7 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE022B622C4081C004AA8F7 /* SoundPlayer.swift */; };
 		6AE06ADE22661335002107AC /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE06ADD22661335002107AC /* Random.swift */; };
 		6AF7416B22C323F500BD7C70 /* Credits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF7416A22C323F500BD7C70 /* Credits.swift */; };
 		6AFDEB2A21DFE625007BEBFE /* ObjectHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFDEB2921DFE625007BEBFE /* ObjectHelper.swift */; };
@@ -60,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		6A0C08D22284677C00CF4290 /* prstartk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = prstartk.ttf; sourceTree = "<group>"; };
+		6A0CFCFB22C4111E00322C9B /* coin7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = coin7.wav; path = ../../../coin_sounds/coin7.wav; sourceTree = "<group>"; };
 		6A11D08122B94D5C0080F1C4 /* EXEPixelPerfect.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EXEPixelPerfect.ttf; path = ../../exepixelperfect/EXEPixelPerfect.ttf; sourceTree = "<group>"; };
 		6A11D08322B96E3B0080F1C4 /* Instructions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instructions.swift; sourceTree = "<group>"; };
 		6A321EFA223FC9F1006000E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Midi Run/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
@@ -90,6 +93,7 @@
 		6AB0E24921D55CBE009C0B30 /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		6AC3087222C1217900F6FFF2 /* Fight in the Dungeon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Fight in the Dungeon.mp3"; path = "../../../songs for game/Fight in the Dungeon.mp3"; sourceTree = "<group>"; };
 		6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "8Bit Title Screen.mp3"; path = "../../../songs for game/8Bit Title Screen.mp3"; sourceTree = "<group>"; };
+		6AE022B622C4081C004AA8F7 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		6AE06ADD22661335002107AC /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		6AF7416A22C323F500BD7C70 /* Credits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
 		6AFDEB2921DFE625007BEBFE /* ObjectHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectHelper.swift; sourceTree = "<group>"; };
@@ -154,7 +158,7 @@
 		6A3B247B21D41CA100474B87 /* Midi Run */ = {
 			isa = PBXGroup;
 			children = (
-				6AC3087122C1216700F6FFF2 /* Music */,
+				6AC3087122C1216700F6FFF2 /* Music and Sounds */,
 				6AB0E24421D54F64009C0B30 /* Helper Files */,
 				6AB0E24121D547E1009C0B30 /* Custom Classes */,
 				6A3B24BD21D42AF600474B87 /* Extensions */,
@@ -273,6 +277,7 @@
 				6AB0E24221D54807009C0B30 /* Player.swift */,
 				6AB0E24721D55874009C0B30 /* GroundNode.swift */,
 				6AE06ADD22661335002107AC /* Random.swift */,
+				6AE022B622C4081C004AA8F7 /* SoundPlayer.swift */,
 			);
 			path = "Custom Classes";
 			sourceTree = "<group>";
@@ -287,13 +292,14 @@
 			path = "Helper Files";
 			sourceTree = "<group>";
 		};
-		6AC3087122C1216700F6FFF2 /* Music */ = {
+		6AC3087122C1216700F6FFF2 /* Music and Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				6A0CFCFB22C4111E00322C9B /* coin7.wav */,
 				6AC3087622C122F800F6FFF2 /* 8Bit Title Screen.mp3 */,
 				6AC3087222C1217900F6FFF2 /* Fight in the Dungeon.mp3 */,
 			);
-			path = Music;
+			path = "Music and Sounds";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,6 +406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A0CFCFC22C4111E00322C9B /* coin7.wav in Resources */,
 				6A3B24BC21D4249200474B87 /* TileSets.sks in Resources */,
 				6A3B248821D41CA100474B87 /* Main.storyboard in Resources */,
 				6AC3087722C122F800F6FFF2 /* 8Bit Title Screen.mp3 in Resources */,
@@ -453,6 +460,7 @@
 				6A3B247D21D41CA100474B87 /* AppDelegate.swift in Sources */,
 				6AB0E23E21D53BA2009C0B30 /* RepeatingLayer.swift in Sources */,
 				6AB0E24821D55874009C0B30 /* GroundNode.swift in Sources */,
+				6AE022B722C4081C004AA8F7 /* SoundPlayer.swift in Sources */,
 				6AB0E24621D54F74009C0B30 /* PhysicsHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

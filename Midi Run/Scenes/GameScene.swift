@@ -26,6 +26,7 @@ class GameScene: SKScene {
     var platformsArray = ["platform12", "platform13", "platform14", "platform15"]
     
     var coins = 0
+
     
     var isGamePaused = false
     
@@ -52,7 +53,7 @@ class GameScene: SKScene {
         }
     }
     
-   
+
     var coinHolder: SKSpriteNode!
     var pipesHolder: SKSpriteNode!
     var platformTimer: Timer!
@@ -78,6 +79,8 @@ class GameScene: SKScene {
             }
         }
     }
+    
+    let soundPlayer = SoundPlayer()
     
     var player: Player!
     
@@ -445,9 +448,10 @@ class GameScene: SKScene {
     
     func collectCoin(sprite: SKSpriteNode) {
         if GameConstants.StringConstants.coinName.contains(sprite.name!) {
+
             score += 100
         }
-        
+
     }
     
     func die(reason: Int) {
@@ -565,11 +569,11 @@ class GameScene: SKScene {
 //
                     view.ignoresSiblingOrder = true
 
-                    view.showsFPS = true
-
-                    view.showsNodeCount = true
-
-                    view.showsPhysics = true
+//                    view.showsFPS = true
+//
+//                    view.showsNodeCount = true
+//
+//                    view.showsPhysics = true
                     
                 }
             }
@@ -583,9 +587,9 @@ class GameScene: SKScene {
                     scene.scaleMode = .aspectFill
                     view.presentScene(scene)
                     view.ignoresSiblingOrder = true
-                    view.showsFPS = true
-                    view.showsNodeCount = true
-                    view.showsPhysics = true
+//                    view.showsFPS = true
+//                    view.showsNodeCount = true
+//                    view.showsPhysics = true
                 }
             }
         }
@@ -671,6 +675,7 @@ extension GameScene: SKPhysicsContactDelegate {
                 score += 50
             }
             if contact.bodyB.categoryBitMask == GameConstants.PhysicsCategories.collectibleCategory {
+                run(SKAction.playSoundFileNamed("coin7", waitForCompletion: false))
                 contact.bodyB.node?.removeFromParent()
                 score += 50
                 scoreLabel?.text = "Score: \(score)"
