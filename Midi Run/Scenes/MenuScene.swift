@@ -83,8 +83,6 @@ class MenuScene: SKScene {
         
     }
     
-    
-    
     func layoutView() {
         
         //self.backgroundColor = UIColor(red: 53.0/255, green: 72.0/255, blue: 77.0/255, alpha: 1.0)
@@ -101,7 +99,6 @@ class MenuScene: SKScene {
         devName.position = CGPoint(x: self.frame.width*0.75, y: frame.maxY/2.5)
         addChild(devName)
         
-        
         let startGame =  SKSpriteNode(imageNamed: GameConstants.StringConstants.startGame)
         startGame.scale(to: frame.size, width: false, multiplier: 0.045) //0.1 for multiplier is a tenth of the height of the screen
         startGame.position = CGPoint(x: frame.midX, y: frame.maxY*0.68)
@@ -112,26 +109,24 @@ class MenuScene: SKScene {
 //        glowBox.position = CGPoint(x: frame.midX-6, y: frame.maxY/4)
 //        addChild(glowBox)
 
-
-        let musicOnOff = SKSpriteNode(imageNamed: "musicOnOff")
-        musicOnOff.scale(to: frame.size, width: false, multiplier: 0.07)
-        musicOnOff.position = CGPoint(x: self.frame.width*0.15, y: frame.maxY - frame.height*0.15)
-        addChild(musicOnOff)
-        
         let instructions = SKSpriteNode(imageNamed: "instructions")
         instructions.name = "Instructions"
         instructions.scale(to: frame.size, width: false, multiplier: 0.07)
-        instructions.position = CGPoint(x: frame.midX, y: frame.maxY - frame.height*0.15)
+        instructions.position = CGPoint(x: self.frame.width*0.15, y: frame.maxY - frame.height*0.15)
         addChild(instructions)
         
+        let inAppPurch = SKSpriteNode(imageNamed: "Shop")
+        inAppPurch.scale(to: frame.size, width: false, multiplier: 0.07)
+        inAppPurch.position = CGPoint(x: frame.midX, y: frame.maxY - frame.height*0.15)
+        addChild(inAppPurch)
+        
+        
         let credits = SKSpriteNode(imageNamed: "credits")
+        credits.name = "Credits"
         credits.scale(to: frame.size, width: false, multiplier: 0.07)
         credits.position = CGPoint(x: self.frame.width*0.85, y: frame.maxY - frame.height*0.15)
         addChild(credits)
         
-        
-        
-       // highscoreBorders()
         
     }
 
@@ -154,17 +149,14 @@ class MenuScene: SKScene {
                 view!.presentScene(instructionScene, transition: transition)
                 
             }
-           
-           // let location = touch.location(in: self)
-//            if atPoint(location).name == "Instructions" {
-//                if let view = self.view as! SKView? {
-//                    let scene = InstructionsScene(size: view.bounds.size)
-//
-//                    scene.scaleMode = .aspectFill
-//                    view.presentScene(scene)
-//                    view.ignoresSiblingOrder = true
+            if atPoint(location).name == "Credits" {
+                let transition:SKTransition = SKTransition.fade(withDuration: 0.4)
+                let instructionScene = CreditScene(size: size)
+                view!.presentScene(instructionScene, transition: transition)
+                
+            }
 
-                    
+
                 }
             }
     

@@ -23,6 +23,8 @@ class GameViewController: UIViewController {
             scene.scaleMode = .aspectFill
             //entire scene will be filled
             
+            scene.anchorPoint = CGPoint(x: 0, y: 0)
+            
             view.presentScene(scene)
             
             view.ignoresSiblingOrder = true
