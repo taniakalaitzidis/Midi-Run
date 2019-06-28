@@ -53,7 +53,7 @@ struct GameConstants {
         static let playerDieAtlas = "Player Die Atlas"
         static let idlePrefixKey = "idle"
         static let runPrefixKey = "run_"
-        static let jumpPrefixKey = "jump"
+        static let jumpPrefixKey = "Jump_"
         static let diePrefixKey = "die_"
         static let coinRotateAtlas = "Coin Rotate Atlas"
         static let coinPrefixKey = "coin-"

@@ -64,7 +64,7 @@ class GameScene: SKScene {
     var lastTime: TimeInterval = 0
     var dt: TimeInterval = 0
     
-    var ableToJump = true
+//    var ableToJump = true
     
     var gameState = GameState.ready {
         willSet {
@@ -157,7 +157,7 @@ class GameScene: SKScene {
 
         // the for in 0...1 means it will run twice; repeating effect
         for i in 0...1 {
-            let backgroundImage = SKSpriteNode(imageNamed: "NEWbackgroundsmaller")
+            let backgroundImage = SKSpriteNode(imageNamed: "new bg copy")
             backgroundImage.name = String(i)
             backgroundImage.scale(to: frame.size, width: false, multiplier: 0.90)
             backgroundImage.anchorPoint = CGPoint.zero
@@ -634,12 +634,12 @@ class GameScene: SKScene {
                 highScore = score
             }
             
-            if player.physicsBody?.velocity.dy == 0 {
-                ableToJump = true
-            }
-            else {
-                ableToJump = false
-            }
+//            if player.physicsBody?.velocity.dy == 0 {
+//                ableToJump = true
+//            }
+//            else {
+//                ableToJump = false
+//            }
         }
     }
     
